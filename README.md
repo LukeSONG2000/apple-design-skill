@@ -17,18 +17,21 @@
 
 ## 快速使用
 
-### Claude Code
-
-将本目录放入项目的 `.claude/commands/` 下即可作为 slash command 使用：
+### Claude Code（全局安装）
 
 ```bash
-# 复制到项目
-cp -r apple-design /your-project/.claude/commands/
+# 克隆到 Claude Code 全局 commands 目录
+git clone https://github.com/LukeSONG2000/apple-design-skill.git \
+  ~/.claude/commands/apple-design
 ```
 
-### Codex (agentskills.io)
+### Codex（全局安装）
 
-将 `SKILL.md` 和 `references/` 放入 Codex 的全局 skills 目录即可。
+```bash
+# 克隆到 Codex 全局 skills 目录
+git clone https://github.com/LukeSONG2000/apple-design-skill.git \
+  ~/.codex/skills/apple-design
+```
 
 ## 内容结构
 
