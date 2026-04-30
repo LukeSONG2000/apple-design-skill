@@ -26,13 +26,9 @@
 cp -r apple-design /your-project/.claude/commands/
 ```
 
-### Codex / OpenClaw (SkillHome)
+### Codex (agentskills.io)
 
-使用 [skill-home](https://github.com/xianzhiqiyue/skill-manager) CLI 安装：
-
-```bash
-skill-home install @LukeSONG2000/apple-design
-```
+将 `SKILL.md` 和 `references/` 放入 Codex 的全局 skills 目录即可。
 
 ## 内容结构
 
