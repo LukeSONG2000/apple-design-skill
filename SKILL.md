@@ -1,22 +1,24 @@
 ---
-name: apple-design
-version: 1.0.0
-description: Apply Apple Design Language (from Apple.com & HIG) to frontend development — platform-agnostic design tokens, component patterns, and layout recipes.
-category: productivity
-tags:
-  - frontend
-  - docs
-  - planning
-  - analysis
-
-namespace: "@LukeSONG2000"
-description_zh: 将 Apple 设计语言（Apple.com + HIG）应用到前端开发——平台无关的 Design Token、组件模式和布局方案。
-author: LukeSONG2000
+name: apple-design-skill
+description: Apply Apple Design Language from Apple.com and HIG to frontend development with platform-agnostic design tokens, component patterns, and layout recipes.
 license: MIT
-homepage: https://github.com/LukeSONG2000/apple-design-skill
-
-ide_config:
+metadata:
+  version: 1.0.0
+  category: productivity
+  tags:
+    - frontend
+    - docs
+    - planning
+    - analysis
+  namespace: "@LukeSONG2000"
+  description_zh: 将 Apple 设计语言（Apple.com + HIG）应用到前端开发——平台无关的 Design Token、组件模式和布局方案。
+  author: LukeSONG2000
+  homepage: https://github.com/LukeSONG2000/apple-design-skill
+  compatibility:
+    claude_code: true
+    codex: true
   claude:
+    legacy_name: apple-design
     auto_activate: false
 ---
 

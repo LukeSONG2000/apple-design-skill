@@ -20,7 +20,11 @@
 ### Claude Code（全局安装）
 
 ```bash
-# 克隆到 Claude Code 全局 commands 目录
+# 推荐：按仓库名克隆，保留 Codex/Codex-compatible skill 名称
+git clone https://github.com/LukeSONG2000/apple-design-skill.git \
+  ~/.claude/commands/apple-design-skill
+
+# 如需兼容旧的 /apple-design 调用，也可以克隆为 legacy 目录名
 git clone https://github.com/LukeSONG2000/apple-design-skill.git \
   ~/.claude/commands/apple-design
 ```
@@ -30,13 +34,15 @@ git clone https://github.com/LukeSONG2000/apple-design-skill.git \
 ```bash
 # 克隆到 Codex 全局 skills 目录
 git clone https://github.com/LukeSONG2000/apple-design-skill.git \
-  ~/.codex/skills/apple-design
+  ~/.codex/skills/apple-design-skill
 ```
 
 ## 内容结构
 
 ```
-apple-design/
+apple-design-skill/
+├── agents/
+│   └── openai.yaml              # Codex UI 元数据
 ├── SKILL.md                    # Skill 主文件（Design Token + 组件模式）
 ├── references/                 # 详细实现参考
 │   ├── 00-philosophy.md        # 设计哲学、HIG 六原则
