@@ -34,6 +34,7 @@ metadata:
 - **[Human Interface Guidelines](https://developer.apple.com/cn/design/)**（Apple 官方设计原则和组件规范）
 - **[Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web)**（Apple 官方编辑与排版规范）
 - **Apple.com 页面结构分析**（布局模式、间距规律的逆向分析）
+- **[refinec/PingFangSC](https://github.com/refinec/PingFangSC)**（跨平台 PingFang SC fallback 字体文件，MIT License）
 
 ## 触发条件
 
@@ -60,8 +61,8 @@ metadata:
 - 字重：300（大标题）/ 400（正文）/ 600（小标题、标签）
 - 标题字间距：`-0.015em` ~ `-0.022em`
 - 行高：英文 1.33，中文 1.8
-- 基础字号 17px
-- 字体栈按平台选择（Web: SF Pro → Helvetica Neue → Arial；中文: PingFang SC → Noto Sans SC）
+- 基础字号：17px
+- 字体栈按平台选择：Apple 设备优先系统 `PingFang SC`，非 Apple 设备可使用内置 `Apple PingFang SC Fallback`；Web 使用 `woff2`，客户端/移动端使用 `ttf`
 
 ### 间距与尺寸
 
@@ -127,3 +128,4 @@ metadata:
 | [03-patterns.md](references/03-patterns.md) | Hero 区、双栏、三栏、图文区等页面布局模式 |
 | [04-accessibility.md](references/04-accessibility.md) | 色彩对比度、Focus 管理、动画减弱、ARIA |
 | [05-tailwind-config.md](references/05-tailwind-config.md) | Tailwind CSS 配置、CSS 变量版、使用示例 |
+| [06-fonts.md](references/06-fonts.md) | PingFang SC 跨平台字体打包方案 |

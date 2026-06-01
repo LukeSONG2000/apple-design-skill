@@ -12,6 +12,7 @@
 | [Human Interface Guidelines (HIG)](https://developer.apple.com/cn/design/) | Apple 官方设计原则和组件规范 |
 | [Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web) | Apple 官方编辑与排版规范 |
 | Apple.com 页面结构 | 布局模式、间距规律的逆向分析 |
+| [refinec/PingFangSC](https://github.com/refinec/PingFangSC) | PingFang SC fallback 字体文件，MIT License |
 
 > **注意**：Apple、Apple Logo、Human Interface Guidelines 等为 Apple Inc. 的商标或版权内容。本项目仅作为设计学习与参考用途，不隶属于 Apple Inc.，也未获得其endorsement。
 
@@ -43,6 +44,8 @@ git clone https://github.com/LukeSONG2000/apple-design-skill.git \
 apple-design-skill/
 ├── agents/
 │   └── openai.yaml              # Codex UI 元数据
+├── assets/
+│   └── fonts/PingFangSC/        # woff2 + ttf 跨平台中文字体
 ├── SKILL.md                    # Skill 主文件（Design Token + 组件模式）
 ├── references/                 # 详细实现参考
 │   ├── 00-philosophy.md        # 设计哲学、HIG 六原则
@@ -50,8 +53,21 @@ apple-design-skill/
 │   ├── 02-components.md        # 按钮、导航栏、卡片、表单、模态框、Toast、页脚
 │   ├── 03-patterns.md          # Hero 区、双栏、三栏、图文区等页面布局模式
 │   ├── 04-accessibility.md     # 色彩对比度、Focus 管理、ARIA、屏幕阅读器
-│   └── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
+│   ├── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
+│   └── 06-fonts.md             # PingFang SC 跨平台字体打包方案
 ```
+
+## 字体资源
+
+仓库内置 `PingFangSC` fallback 字体，用于非 Apple 设备保持统一中文观感；Apple 设备优先使用系统 `PingFang SC`，无需加载内置字体。
+
+| 平台 | 推荐格式 | 目录 |
+|---|---|---|
+| Web / PWA / Electron / Tauri WebView | `woff2` | `assets/fonts/PingFangSC/woff2` |
+| React Native / Flutter / Android / Windows 客户端 | `ttf` | `assets/fonts/PingFangSC/ttf` |
+| iOS / macOS 原生 | 系统字体 | 不需要打包 |
+
+Web 可直接引用 `assets/fonts/PingFangSC/pingfang-sc.css`。详细方案见 [references/06-fonts.md](references/06-fonts.md)。
 
 ## Design Token 速查
 

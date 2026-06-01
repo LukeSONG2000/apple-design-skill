@@ -80,8 +80,9 @@ module.exports = {
         'sans-serif',
       ],
       cn: [
-        '"SF Pro SC"',
         '"PingFang SC"',
+        '"SF Pro SC"',
+        '"Apple PingFang SC Fallback"',
         '"Noto Sans SC"',
         '"Helvetica Neue"',
         'Arial',
@@ -241,7 +242,7 @@ module.exports = {
 
   /* ── 排版 ── */
   --apple-font-system:      -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --apple-font-cn:          "SF Pro SC", "PingFang SC", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+  --apple-font-cn:          "PingFang SC", "SF Pro SC", "Apple PingFang SC Fallback", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
   --apple-font-mono:        "SF Mono", Menlo, Consolas, monospace;
 
   --apple-text-xs:          12px;
