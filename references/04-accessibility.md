@@ -253,11 +253,12 @@ function trapFocus(element) {
 ```css
 /**
  * 动画减弱 — 尊重用户的系统辅助功能设置
- * 完全禁用所有动画和过渡，保留纯状态变化
+ * 减少或替换非必要运动，保留可理解的状态变化
+ * 完整 motion 规范见 references/07-motion.md
  */
 
 @media (prefers-reduced-motion: reduce) {
-  /* 全局禁用 */
+  /* 全局缩短非必要动画 */
   *,
   *::before,
   *::after {
@@ -308,10 +309,11 @@ function trapFocus(element) {
 
 | 做法 | 说明 |
 |---|---|
-| 用 CSS `transition` 替代 `@keyframes` | transition 可中断，keyframe 不可中断 |
-| 提供静态降级方案 | 每个动画元素都有无动画的展示方式 |
+| 减少或替换非必要运动 | 大位移、缩放、视差、scroll scrub 优先替换为 fade 或静态状态 |
+| 提供静态降级方案 | 每个动画元素都有无动画或少动画的展示方式 |
 | 不要依赖动画传递信息 | 信息应在动画前就已可见 |
 | 尊重 `prefers-reduced-motion` | 使用 `@media (prefers-reduced-motion: reduce)` |
+| 循环动画可控 | 自动移动、闪烁、滚动或更新超过 5 秒时提供暂停、停止或隐藏 |
 
 ---
 

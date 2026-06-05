@@ -1,6 +1,6 @@
 ---
 name: apple-design-skill
-description: Apply Apple Design Language from Apple.com and HIG to frontend development with platform-agnostic design tokens, component patterns, and layout recipes.
+description: Apply Apple Design Language from Apple.com and HIG to frontend development with platform-agnostic design tokens, motion tokens, component patterns, and layout recipes.
 license: MIT
 metadata:
   version: 1.0.0
@@ -11,7 +11,7 @@ metadata:
     - planning
     - analysis
   namespace: "@LukeSONG2000"
-  description_zh: 将 Apple 设计语言（Apple.com + HIG）应用到前端开发——平台无关的 Design Token、组件模式和布局方案。
+  description_zh: 将 Apple 设计语言（Apple.com + HIG）应用到前端开发——平台无关的 Design Token、Motion Token、组件模式和布局方案。
   author: LukeSONG2000
   homepage: https://github.com/LukeSONG2000/apple-design-skill
   compatibility:
@@ -24,7 +24,7 @@ metadata:
 
 # Apple Design Language — Frontend Skill
 
-将 Apple 设计语言应用到前端开发。本 skill 提供平台无关的 Design Token 和组件模式，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。完整的 CSS/Tailwind 实现参考见 [references/](references/) 目录。
+将 Apple 设计语言应用到前端开发。本 skill 提供平台无关的 Design Token、Motion Token 和组件模式，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。完整的 CSS/Tailwind 实现参考见 [references/](references/) 目录。
 
 ## 数据来源
 
@@ -34,6 +34,7 @@ metadata:
 - **[Human Interface Guidelines](https://developer.apple.com/cn/design/)**（Apple 官方设计原则和组件规范）
 - **[Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web)**（Apple 官方编辑与排版规范）
 - **Apple.com 页面结构分析**（布局模式、间距规律的逆向分析）
+- **Motion 设计标准**（Apple HIG、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
 - **[refinec/PingFangSC](https://github.com/refinec/PingFangSC)**（跨平台 PingFang SC fallback 字体文件，MIT License）
 
 ## 触发条件
@@ -71,12 +72,16 @@ metadata:
 - 圆角：按钮 8px / 卡片 12px / 大面板 20px / 药丸形 980px
 - 断点：320 / 735 / 1068 / 1441px
 
-### 动效
+### Motion
 
-- 微交互（hover、toggle）：100ms linear
-- 标准过渡（展开、切换）：200ms ease
-- 大幅动画（页面进入、揭示）：600ms ease
-- 必须尊重用户减少动画偏好
+动效规范单独维护在 [references/07-motion.md](references/07-motion.md)，不要与色彩、字体、间距、圆角等前端样式 token 混写。
+
+- 交互反馈：50-150ms
+- 常规转场：150-400ms
+- 低频大动画：500-600ms
+- 进入用 ease-out/deceleration，退出用 ease-in/acceleration，屏幕内移动用 standard/ease-in-out
+- 首选 `opacity` 和 `transform`，避免 `transition: all`
+- 必须尊重 `prefers-reduced-motion`
 
 ### 毛玻璃
 
@@ -123,9 +128,10 @@ metadata:
 | 文件 | 内容 |
 |---|---|
 | [00-philosophy.md](references/00-philosophy.md) | 设计哲学、HIG 六原则、设计签名 |
-| [01-tokens.md](references/01-tokens.md) | 色彩、排版、间距、断点、圆角、阴影、毛玻璃、动效 |
+| [01-tokens.md](references/01-tokens.md) | 色彩、排版、间距、断点、圆角、阴影、毛玻璃 |
 | [02-components.md](references/02-components.md) | 按钮、导航栏、卡片、表单、模态框、Toast、页脚 |
 | [03-patterns.md](references/03-patterns.md) | Hero 区、双栏、三栏、图文区等页面布局模式 |
 | [04-accessibility.md](references/04-accessibility.md) | 色彩对比度、Focus 管理、动画减弱、ARIA |
 | [05-tailwind-config.md](references/05-tailwind-config.md) | Tailwind CSS 配置、CSS 变量版、使用示例 |
 | [06-fonts.md](references/06-fonts.md) | PingFang SC 跨平台字体打包方案 |
+| [07-motion.md](references/07-motion.md) | 独立 Motion Token、动效原则、模式矩阵、reduced motion |

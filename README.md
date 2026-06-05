@@ -1,6 +1,6 @@
 # Apple Design Language — Frontend Skill
 
-将 Apple 设计语言（Apple.com + HIG）应用到前端开发的 AI Skill。平台无关的 Design Token、组件模式和布局方案，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。
+将 Apple 设计语言（Apple.com + HIG）应用到前端开发的 AI Skill。平台无关的 Design Token、Motion Token、组件模式和布局方案，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。
 
 ## 数据来源
 
@@ -12,6 +12,7 @@
 | [Human Interface Guidelines (HIG)](https://developer.apple.com/cn/design/) | Apple 官方设计原则和组件规范 |
 | [Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web) | Apple 官方编辑与排版规范 |
 | Apple.com 页面结构 | 布局模式、间距规律的逆向分析 |
+| Motion 设计标准 | Apple HIG、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN |
 | [refinec/PingFangSC](https://github.com/refinec/PingFangSC) | PingFang SC fallback 字体文件，MIT License |
 
 > **注意**：Apple、Apple Logo、Human Interface Guidelines 等为 Apple Inc. 的商标或版权内容。本项目仅作为设计学习与参考用途，不隶属于 Apple Inc.，也未获得其endorsement。
@@ -49,12 +50,13 @@ apple-design-skill/
 ├── SKILL.md                    # Skill 主文件（Design Token + 组件模式）
 ├── references/                 # 详细实现参考
 │   ├── 00-philosophy.md        # 设计哲学、HIG 六原则
-│   ├── 01-tokens.md            # 色彩、排版、间距、断点、圆角、阴影、毛玻璃、动效
+│   ├── 01-tokens.md            # 色彩、排版、间距、断点、圆角、阴影、毛玻璃
 │   ├── 02-components.md        # 按钮、导航栏、卡片、表单、模态框、Toast、页脚
 │   ├── 03-patterns.md          # Hero 区、双栏、三栏、图文区等页面布局模式
 │   ├── 04-accessibility.md     # 色彩对比度、Focus 管理、ARIA、屏幕阅读器
 │   ├── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
-│   └── 06-fonts.md             # PingFang SC 跨平台字体打包方案
+│   ├── 06-fonts.md             # PingFang SC 跨平台字体打包方案
+│   └── 07-motion.md            # 独立 Motion Token、动效原则、reduced motion
 ```
 
 ## 字体资源
@@ -68,6 +70,10 @@ apple-design-skill/
 | iOS / macOS 原生 | 系统字体 | 不需要打包 |
 
 Web 可直接引用 `assets/fonts/PingFangSC/pingfang-sc.css`。详细方案见 [references/06-fonts.md](references/06-fonts.md)。
+
+## Motion 规范
+
+前端样式 token 与动画 token 分开维护。色彩、排版、间距、圆角、阴影、毛玻璃见 [references/01-tokens.md](references/01-tokens.md)；动画原则、duration/easing、模式矩阵、reduced motion 方案见 [references/07-motion.md](references/07-motion.md)。
 
 ## Design Token 速查
 

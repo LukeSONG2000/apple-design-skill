@@ -143,19 +143,29 @@ module.exports = {
         apple: '180%',    // Apple 标志性饱和度增强
       },
 
-      /* transition duration */
+      /* motion utilities: detailed standards live in references/07-motion.md */
       transitionDuration: {
-        instant: '100ms',   // 微交互
-        fast:    '200ms',   // 标准过渡
-        normal:  '350ms',   // 内容过渡
-        slow:    '600ms',   // 大幅动画
-        spring:  '500ms',   // 弹性动画
+        immediate: '50ms',
+        instant:   '100ms',
+        fast:      '150ms',
+        standard:  '200ms',
+        content:   '300ms',
+        modal:     '350ms',
+        large:     '500ms',
+        hero:      '600ms',
+        loop:      '1500ms',
       },
 
-      /* transition timing */
+      /* motion easing */
       transitionTimingFunction: {
-        apple:       'cubic-bezier(0.25, 0.1, 0.25, 1)',
-        'apple-spring': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        'apple-linear':     'linear',
+        'apple-standard':   'cubic-bezier(0.25, 0.1, 0.25, 1)',
+        'apple-emphasized': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'apple-enter':      'cubic-bezier(0, 0, 0.2, 1)',
+        'apple-exit':       'cubic-bezier(0.4, 0, 1, 1)',
+        'apple-productive': 'cubic-bezier(0.2, 0, 0.38, 0.9)',
+        'apple-expressive': 'cubic-bezier(0.4, 0.14, 0.3, 1)',
+        'apple-spring':     'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       },
 
       /* letter spacing */
@@ -314,15 +324,26 @@ module.exports = {
   --apple-blur-toast:       2px;
   --apple-saturate-glass:   180%;
 
-  /* ── 动效 ── */
-  --apple-duration-instant: 100ms;
-  --apple-duration-fast:    200ms;
-  --apple-duration-normal:  350ms;
-  --apple-duration-slow:    600ms;
-  --apple-duration-spring:  500ms;
+  /* ── Motion tokens ── */
+  /* 完整动画规范见 references/07-motion.md；此处仅提供 CSS 变量入口 */
+  --apple-motion-duration-immediate: 50ms;
+  --apple-motion-duration-instant:   100ms;
+  --apple-motion-duration-fast:      150ms;
+  --apple-motion-duration-standard:  200ms;
+  --apple-motion-duration-content:   300ms;
+  --apple-motion-duration-modal:     350ms;
+  --apple-motion-duration-large:     500ms;
+  --apple-motion-duration-hero:      600ms;
+  --apple-motion-duration-loop:      1500ms;
 
-  --apple-ease-default:     cubic-bezier(0.25, 0.1, 0.25, 1);
-  --apple-ease-spring:      cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --apple-motion-ease-linear:        linear;
+  --apple-motion-ease-standard:      cubic-bezier(0.25, 0.1, 0.25, 1);
+  --apple-motion-ease-emphasized:    cubic-bezier(0.4, 0, 0.2, 1);
+  --apple-motion-ease-enter:         cubic-bezier(0, 0, 0.2, 1);
+  --apple-motion-ease-exit:          cubic-bezier(0.4, 0, 1, 1);
+  --apple-motion-ease-productive:    cubic-bezier(0.2, 0, 0.38, 0.9);
+  --apple-motion-ease-expressive:    cubic-bezier(0.4, 0.14, 0.3, 1);
+  --apple-motion-ease-spring:        cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   /* ── 布局 ── */
   --apple-max-content:      980px;
@@ -432,5 +453,6 @@ module.exports = {
 | `borderRadius.*` | 2.4 圆角 | `apple-design-language.md` |
 | `boxShadow.*` | 2.5 阴影与深度 | `apple-design-language.md` |
 | `backdropBlur.*` | 2.6 毛玻璃/材质 | `apple-design-language.md` |
-| `transitionDuration.*` | 2.7 动效与过渡 | `apple-design-language.md` |
+| `transitionDuration.*` | 07 Motion System | `references/07-motion.md` |
+| `transitionTimingFunction.*` | 07 Motion System | `references/07-motion.md` |
 | `letterSpacing.*` | 2.2 排版系统 — 字间距 | `apple-design-language.md` |

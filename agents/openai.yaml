@@ -1,5 +1,5 @@
 interface:
   display_name: "Apple Design Skill"
-  short_description: "Apply Apple-style frontend design patterns"
+  short_description: "Apply Apple-style frontend design and motion patterns"
   brand_color: "#0071E3"
   default_prompt: "Use $apple-design-skill to design a polished Apple-style frontend interface."

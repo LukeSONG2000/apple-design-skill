@@ -664,88 +664,13 @@ Apple.com CSS 中使用的 opacity 值（完整提取）：
 
 ---
 
-## 8. 动效系统
+## 8. Motion Token 分离
 
-### 8.1 时间与曲线
+本文件只维护前端视觉样式 token: 色彩、排版、间距、断点、圆角、阴影、毛玻璃。动画属于独立 motion system，不在此处混写。
 
-```css
-:root {
-  /* ── 微交互（100ms 线性） ── */
-  /* 按钮 hover/active、链接颜色、开关切换 */
-  --duration-instant: 100ms;
-  --ease-instant: linear;
-
-  /* ── 标准过渡（200ms ease） ── */
-  /* 下拉展开、tooltip 出现、hover 阴影变化 */
-  --duration-fast: 200ms;
-  --ease-fast: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-  /* ── 内容过渡（350ms ease） ── */
-  /* 页面内容切换、Tab 切换、列表项重排 */
-  --duration-normal: 350ms;
-  --ease-normal: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-  /* ── 大幅动画（600ms ease） ── */
-  /* Hero 动画、全屏过渡、模态框弹出 */
-  --duration-slow: 600ms;
-  --ease-slow: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-  /* ── 弹性动画（500ms spring） ── */
-  /* 按钮/卡片的弹性反馈、下拉刷新回弹 */
-  --duration-spring: 500ms;
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-```
-
-### 8.2 常用过渡定义
-
-```css
-/* 按钮状态 */
-.button {
-  transition: background 100ms linear,
-              transform 100ms linear,
-              box-shadow 200ms ease;
-}
-
-/* 卡片 hover */
-.card {
-  transition: transform 200ms ease,
-              box-shadow 200ms ease;
-}
-
-/* 链接下划线 */
-.link {
-  transition: color 100ms linear;
-}
-
-/* 模态框弹出 */
-.modal {
-  transition: opacity 350ms ease,
-              transform 350ms ease;
-}
-
-/* 页面切换 */
-.page-transition {
-  transition: opacity 600ms ease,
-              transform 600ms ease;
-}
-```
-
-### 8.3 无障碍
-
-```css
-/* 尊重用户减少动画偏好 */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-```
+- Duration、easing、property、pattern matrix: 见 [07-motion.md](07-motion.md)
+- Tailwind motion utilities: 见 [07-motion.md](07-motion.md#6-tailwind-extension)
+- Reduced motion contract: 见 [07-motion.md](07-motion.md#7-reduced-motion-contract)
 
 ---
 
