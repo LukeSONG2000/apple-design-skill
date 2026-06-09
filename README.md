@@ -1,6 +1,6 @@
 # Apple Design Language — Frontend Skill
 
-将 Apple 设计语言（Apple.com + HIG）应用到前端开发的 AI Skill。平台无关的 Design Token、Motion Token、组件模式和布局方案，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。
+将 Apple 设计语言（Apple.com + HIG + Apple Design Resources）应用到前端开发的 AI Skill。平台无关的 Design Token、Motion Token、Apple 官方文档地图、HIG 组件行为抽取、平台适配、Apple 资源/技术品牌指南、动画模板、组件模式和布局方案，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。
 
 ## 数据来源
 
@@ -10,9 +10,10 @@
 |---|---|
 | [Apple.com 主 CSS](https://www.apple.com) | 从公开样式表中提取的色值、字号、间距等数值 |
 | [Human Interface Guidelines (HIG)](https://developer.apple.com/cn/design/) | Apple 官方设计原则和组件规范 |
+| [Apple Design Resources](https://developer.apple.com/design/resources/) | 官方 UI Kits、模板、字体、SF Symbols、技术品牌资源 |
 | [Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web) | Apple 官方编辑与排版规范 |
 | Apple.com 页面结构 | 布局模式、间距规律的逆向分析 |
-| Motion 设计标准 | Apple HIG、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN |
+| Motion 设计标准 | Apple HIG Motion/Loading/Materials、Liquid Glass、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN |
 | [refinec/PingFangSC](https://github.com/refinec/PingFangSC) | PingFang SC fallback 字体文件，MIT License |
 
 > **注意**：Apple、Apple Logo、Human Interface Guidelines 等为 Apple Inc. 的商标或版权内容。本项目仅作为设计学习与参考用途，不隶属于 Apple Inc.，也未获得其endorsement。
@@ -56,7 +57,13 @@ apple-design-skill/
 │   ├── 04-accessibility.md     # 色彩对比度、Focus 管理、ARIA、屏幕阅读器
 │   ├── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
 │   ├── 06-fonts.md             # PingFang SC 跨平台字体打包方案
-│   └── 07-motion.md            # 独立 Motion Token、动效原则、reduced motion
+│   ├── 07-motion.md            # 独立 Motion Token、动效原则、reduced motion
+│   ├── 08-apple-docs-coverage.md # Apple 官方文档覆盖地图
+│   ├── 09-motion-templates.md  # Apple 风格动画模板库
+│   ├── 10-apple-official-docs-map.md # 爬取后的官方 URL 分类地图
+│   ├── 11-hig-foundations-patterns.md # HIG Foundations / Patterns 抽取
+│   ├── 12-hig-components-inputs.md # HIG Components / Inputs 抽取
+│   └── 13-platform-resources-technologies.md # 平台、资源、技术品牌
 ```
 
 ## 字体资源
@@ -73,7 +80,7 @@ Web 可直接引用 `assets/fonts/PingFangSC/pingfang-sc.css`。详细方案见 
 
 ## Motion 规范
 
-前端样式 token 与动画 token 分开维护。色彩、排版、间距、圆角、阴影、毛玻璃见 [references/01-tokens.md](references/01-tokens.md)；动画原则、duration/easing、模式矩阵、reduced motion 方案见 [references/07-motion.md](references/07-motion.md)。
+前端样式 token 与动画 token 分开维护。色彩、排版、间距、圆角、阴影、毛玻璃见 [references/01-tokens.md](references/01-tokens.md)；动画原则、duration/easing、模式矩阵、reduced motion 方案见 [references/07-motion.md](references/07-motion.md)；Apple 风格动画模板见 [references/09-motion-templates.md](references/09-motion-templates.md)。
 
 ## Design Token 速查
 

@@ -2,8 +2,16 @@
 name: apple-design-skill
 description: Apply Apple Design Language from Apple.com and HIG to frontend development with platform-agnostic design tokens, motion tokens, component patterns, and layout recipes.
 license: MIT
+version: 1.2.0
+author: LukeSONG2000
+category: productivity
+tags:
+  - frontend
+  - docs
+  - planning
+  - analysis
 metadata:
-  version: 1.0.0
+  version: 1.2.0
   category: productivity
   tags:
     - frontend
@@ -11,7 +19,7 @@ metadata:
     - planning
     - analysis
   namespace: "@LukeSONG2000"
-  description_zh: 将 Apple 设计语言（Apple.com + HIG）应用到前端开发——平台无关的 Design Token、Motion Token、组件模式和布局方案。
+  description_zh: 将 Apple 设计语言（Apple.com + HIG + Apple Design Resources）应用到前端开发——平台无关的 Design Token、Motion Token、官方文档地图、组件行为、平台适配、技术品牌和动画模板。
   author: LukeSONG2000
   homepage: https://github.com/LukeSONG2000/apple-design-skill
   compatibility:
@@ -24,7 +32,17 @@ metadata:
 
 # Apple Design Language — Frontend Skill
 
-将 Apple 设计语言应用到前端开发。本 skill 提供平台无关的 Design Token、Motion Token 和组件模式，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。完整的 CSS/Tailwind 实现参考见 [references/](references/) 目录。
+将 Apple 设计语言应用到前端开发。本 skill 提供平台无关的 Design Token、Motion Token、Apple 官方文档地图、HIG 组件行为抽取、平台适配、Apple 资源/技术品牌指南、动画模板和组件模式，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。完整的 CSS/Tailwind 实现参考见 [references/](references/) 目录。
+
+## 跨平台边界
+
+本 skill 的目标是**跨平台参考 Apple 设计语言**，不是把 Apple 独有平台或系统能力照搬到 Web / Android / Windows / 企业客户端。
+
+- 默认抽取可迁移原则：层级、间距、语义色、可读性、输入反馈、加载、动效节奏、无障碍。
+- iOS / iPadOS / macOS / Apple.com 可作为主要跨平台参考。
+- watchOS / tvOS / visionOS / CarPlay / Dynamic Island / Live Activities / Digital Crown / Eyes 等只作为**场景启发或约束模型**，除非目标产品确实运行在对应平台或有等价输入/硬件场景。
+- Apple Pay / Sign in with Apple / Wallet / HealthKit / SF Symbols / Product Bezels / Apple Fonts 等属于**Apple 资源或技术品牌**，只在合规和平台支持时使用；跨平台默认提供中性 fallback。
+- 判断适用等级时先读 [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) 和 [13-platform-resources-technologies.md](references/13-platform-resources-technologies.md)。
 
 ## 数据来源
 
@@ -32,9 +50,10 @@ metadata:
 
 - **Apple.com 主 CSS**（公开样式表中提取的色值、字号、间距等数值）
 - **[Human Interface Guidelines](https://developer.apple.com/cn/design/)**（Apple 官方设计原则和组件规范）
+- **[Apple Design Resources](https://developer.apple.com/design/resources/)**（官方 UI Kits、模板、字体、SF Symbols、技术品牌资源）
 - **[Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web)**（Apple 官方编辑与排版规范）
 - **Apple.com 页面结构分析**（布局模式、间距规律的逆向分析）
-- **Motion 设计标准**（Apple HIG、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
+- **Motion 设计标准**（Apple HIG Motion/Loading/Materials、Liquid Glass、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
 - **[refinec/PingFangSC](https://github.com/refinec/PingFangSC)**（跨平台 PingFang SC fallback 字体文件，MIT License）
 
 ## 触发条件
@@ -74,13 +93,14 @@ metadata:
 
 ### Motion
 
-动效规范单独维护在 [references/07-motion.md](references/07-motion.md)，不要与色彩、字体、间距、圆角等前端样式 token 混写。
+动效规范单独维护在 [references/07-motion.md](references/07-motion.md)，动画模板维护在 [references/09-motion-templates.md](references/09-motion-templates.md)，不要与色彩、字体、间距、圆角等前端样式 token 混写。
 
 - 交互反馈：50-150ms
 - 常规转场：150-400ms
 - 低频大动画：500-600ms
 - 进入用 ease-out/deceleration，退出用 ease-in/acceleration，屏幕内移动用 standard/ease-in-out
 - 首选 `opacity` 和 `transform`，避免 `transition: all`
+- Liquid Glass 动效只用于层级、连续性和材料响应，不做通用 blur 装饰
 - 必须尊重 `prefers-reduced-motion`
 
 ### 毛玻璃
@@ -135,3 +155,9 @@ metadata:
 | [05-tailwind-config.md](references/05-tailwind-config.md) | Tailwind CSS 配置、CSS 变量版、使用示例 |
 | [06-fonts.md](references/06-fonts.md) | PingFang SC 跨平台字体打包方案 |
 | [07-motion.md](references/07-motion.md) | 独立 Motion Token、动效原则、模式矩阵、reduced motion |
+| [08-apple-docs-coverage.md](references/08-apple-docs-coverage.md) | Apple 官方文档覆盖地图、任务到文档的路由 |
+| [09-motion-templates.md](references/09-motion-templates.md) | Apple 风格前端动画模板库、Liquid Glass 和平台转场模式 |
+| [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) | 爬取后的 Apple 官方 URL 分类地图、skill 调用路由 |
+| [11-hig-foundations-patterns.md](references/11-hig-foundations-patterns.md) | HIG Foundations / Patterns 抽取：视觉、文案、隐私、加载、搜索 |
+| [12-hig-components-inputs.md](references/12-hig-components-inputs.md) | HIG Components / Inputs 抽取：控件、导航、表单、菜单、键盘/指针/触控 |
+| [13-platform-resources-technologies.md](references/13-platform-resources-technologies.md) | 平台适配、Apple Design Resources、字体/SF Symbols、技术品牌 |

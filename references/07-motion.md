@@ -8,6 +8,11 @@ Apple 风格前端动画规范。本文只定义 motion: timing、easing、prope
 |---|---|
 | [Apple HIG Motion](https://developer.apple.com/design/human-interface-guidelines/motion) | 动效必须有目的，帮助表达状态、反馈、空间关系；不要为了装饰添加动画；必须让 motion optional |
 | [Apple HIG Loading](https://developer.apple.com/design/human-interface-guidelines/loading) | 加载时优先尽快显示内容；超过一两秒再显示进度；知道进度用 determinate，不知道进度用 indeterminate |
+| [Apple HIG Materials](https://developer.apple.com/design/human-interface-guidelines/materials) | 材料表达层级和背景关系；半透明、模糊和 vibrancy 必须服务于可读性 |
+| [Apple Liquid Glass](https://developer.apple.com/documentation/technologyoverviews/liquid-glass) | Liquid Glass 是动态材料系统，强调适应性、层级、触控响应和连续形变 |
+| [SwiftUI GlassEffectContainer](https://developer.apple.com/documentation/swiftui/glasseffectcontainer) | 多个 glass 元素可以作为容器化材料组来协调运动和 morph |
+| [SwiftUI GlassEffectTransition](https://developer.apple.com/documentation/swiftui/glasseffecttransition) | glass 元素的进入、退出和状态变化应保持材料连续性 |
+| [SwiftUI navigationTransition](https://developer.apple.com/documentation/swiftui/view/navigationtransition%28_%3A%29) | 导航转场可以保留 source 和 destination 的空间关系 |
 | [Apple Support Reduce Motion](https://support.apple.com/en-us/111781) | Reduce Motion 会将缩放/滑动类转场替换为 dissolve，关闭视差和部分应用动画 |
 | [Material Design Motion](https://m1.material.io/motion/material-motion.html) | motion 用来表达空间关系、功能和意图；动画要快速、精准、自然 |
 | [Material Duration & Easing](https://m1.material.io/motion/duration-easing.html) | 按距离、速度、表面变化动态调整时长；进入用 deceleration，离开用 acceleration，常规移动用 standard curve |
@@ -83,6 +88,8 @@ Apple 风格前端动画规范。本文只定义 motion: timing、easing、prope
 | `color/background` | 可用 | 100-150ms，通常 linear 即可 |
 
 ## 4. Pattern Matrix
+
+本节定义基础 motion 场景。更完整的 Apple 风格模板库见 [09-motion-templates.md](09-motion-templates.md)，包括 Liquid Glass morph、source-to-destination、Dynamic Island pill、tvOS focus parallax、visionOS depth reveal 等模板。
 
 | 场景 | 属性 | 时长 | 曲线 | reduced motion |
 |---|---|---:|---|---|
