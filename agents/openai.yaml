@@ -1,5 +1,5 @@
 interface:
   display_name: "Apple Design Skill"
-  short_description: "Apply Apple-style frontend design, HIG maps, platform adaptation, and motion templates"
+  short_description: "Use with frontend-design as an Apple Design reference: HIG maps, tokens, motion, and platform boundaries"
   brand_color: "#0071E3"
-  default_prompt: "Use $apple-design-skill to design a polished Apple-style frontend interface."
+  default_prompt: "Use $apple-design-skill alongside $frontend-design as an Apple Design reference for a polished frontend interface."

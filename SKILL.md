@@ -1,8 +1,8 @@
 ---
 name: apple-design-skill
-description: Apply Apple Design Language from Apple.com and HIG to frontend development with platform-agnostic design tokens, motion tokens, component patterns, and layout recipes.
+description: Use alongside frontend-design for frontend UI, pages, components, styling, and motion as a companion Apple Design reference; keep frontend-design primary; add Apple.com/HIG tokens and motion cues.
 license: MIT
-version: 1.2.0
+version: 1.2.1
 author: LukeSONG2000
 category: productivity
 tags:
@@ -11,7 +11,7 @@ tags:
   - planning
   - analysis
 metadata:
-  version: 1.2.0
+  version: 1.2.1
   category: productivity
   tags:
     - frontend
@@ -19,7 +19,7 @@ metadata:
     - planning
     - analysis
   namespace: "@LukeSONG2000"
-  description_zh: 将 Apple 设计语言（Apple.com + HIG + Apple Design Resources）应用到前端开发——平台无关的 Design Token、Motion Token、官方文档地图、组件行为、平台适配、技术品牌和动画模板。
+  description_zh: frontend-design 的 Apple Design 伴随参考层：在前端 UI、页面、组件、样式和动效任务中补充 Apple.com/HIG Token、动效、材料、平台适配和边界说明。
   author: LukeSONG2000
   homepage: https://github.com/LukeSONG2000/apple-design-skill
   compatibility:
@@ -58,7 +58,7 @@ metadata:
 
 ## 触发条件
 
-当用户要求构建具有 Apple 风格的界面、参考 Apple 设计规范、或使用 Apple 视觉语言时触发。
+当前端设计任务触发 `frontend-design` 时，也同时使用本 skill 作为 Apple Design 参考层；`frontend-design` 仍负责主创意和实现，本 skill 负责 Apple.com/HIG 的样式、动效、平台适配和边界校验。用户明确要求 Apple 风格、Apple 设计规范、Apple 动画/字体/毛玻璃，或跨平台参考 Apple 设计语言时，也单独触发。
 
 ## 设计 Token
 
