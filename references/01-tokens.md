@@ -666,7 +666,7 @@ Apple.com CSS 中使用的 opacity 值（完整提取）：
 
 ## 8. Motion Token 分离
 
-本文件只维护前端视觉样式 token: 色彩、排版、间距、断点、圆角、阴影、毛玻璃。动画属于独立 motion system，不在此处混写。
+本文件只维护前端视觉样式 token，包括色彩、排版、间距、断点、圆角、阴影、毛玻璃。动画属于独立 motion system，不在此处混写。
 
 - Duration、easing、property、pattern matrix: 见 [07-motion.md](07-motion.md)
 - Tailwind motion utilities: 见 [07-motion.md](07-motion.md#6-tailwind-extension)
