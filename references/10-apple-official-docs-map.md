@@ -1,6 +1,6 @@
 # Apple Official Docs Crawl Map
 
-Crawled snapshot: 2026-06-09. Source scope: Apple Human Interface Guidelines, Apple Design Resources, Apple Fonts, SF Symbols, Apple Style Guide, and selected Apple Developer documentation for Liquid Glass and navigation transitions.
+Crawled snapshot: 2026-07-01. Source scope: Apple Human Interface Guidelines, Apple Design Resources, Apple Fonts, SF Symbols, Apple Style Guide, and selected Apple Developer documentation for Liquid Glass and navigation transitions.
 
 This file is the routing map. It lists where Apple official material lives and which local reference to load before implementing a frontend. It intentionally stores titles, URLs, and frontend routing notes rather than long copied passages from Apple docs.
 
@@ -30,12 +30,40 @@ This file is the routing map. It lists where Apple official material lives and w
 | Official docs lookup | `10-apple-official-docs-map.md` | relevant category below | Need to find which Apple doc/page applies |
 | Foundations: color, layout, typography, materials | `11-hig-foundations-patterns.md` | `01-tokens.md`, `03-patterns.md` | Visual system, semantic tokens, hierarchy, copy |
 | Patterns: loading, search, privacy, onboarding | `11-hig-foundations-patterns.md` | `04-accessibility.md`, `09-motion-templates.md` | Flow design and system states |
-| Components and inputs | `12-hig-components-inputs.md` | `02-components.md`, `07-motion.md` | Buttons, sheets, menus, tables, forms, keyboard/pointer/touch |
+| Components and inputs | `12-hig-components-inputs.md` | `02-components.md`, `07-motion.md`, `15-liquid-glass-controls.md` | Buttons, sheets, menus, tables, forms, keyboard/pointer/touch, Liquid Glass controls |
 | Platform adaptation | `13-platform-resources-technologies.md` | `03-patterns.md`, `04-accessibility.md` | Apply platform references with transferability filter |
 | Apple resources and brand technologies | `13-platform-resources-technologies.md` | `06-fonts.md`, `01-tokens.md` | Use Apple-only resources only when licensed/supported; provide fallback |
-| Liquid Glass / materials / motion | `07-motion.md` | `09-motion-templates.md`, `01-tokens.md` | Glass material, morph, scroll-linked scenes, transition design |
+| Liquid Glass / materials / motion | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md` | `07-motion.md`, `09-motion-templates.md`, `01-tokens.md` | Adoption audit, controls, Landmarks patterns, glass material, morph, scroll-edge scenes |
 
-## 4. Foundations
+## 4. Liquid Glass
+
+Liquid Glass has a standalone route because it crosses foundations, controls, motion, accessibility, SwiftUI APIs, and platform-specific materials. Load this section before treating any blur/translucency as an Apple-style design decision.
+
+| Apple doc | URL | Applicability | Local extraction | Frontend use |
+|---|---|---|---|---|
+| HIG Materials: Liquid Glass | https://developer.apple.com/cn/design/human-interface-guidelines/materials#Liquid-Glass | Core transferable principles / Apple material behavior | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `01-tokens.md` | Functional-layer rule, regular/clear variant choice, scroll-edge readability, content-layer boundary |
+| HIG Materials: Standard materials | https://developer.apple.com/cn/design/human-interface-guidelines/materials#Standard-materials | Core transferable principles | `14-liquid-glass-adoption.md`, `01-tokens.md` | Use standard/opaque materials for content structure under glass |
+| HIG Color: Liquid Glass color | https://developer.apple.com/design/human-interface-guidelines/color#Liquid-Glass-color | Core transferable principles | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `01-tokens.md` | Tint sparingly, emphasize primary actions with material tint, keep controls monochrome over colorful content |
+| HIG Accessibility | https://developer.apple.com/design/human-interface-guidelines/accessibility | Core transferable | `04-accessibility.md`, `14-liquid-glass-adoption.md` | Reduced transparency, increased contrast, legibility checks |
+| HIG Dark Mode | https://developer.apple.com/design/human-interface-guidelines/dark-mode | Core transferable | `01-tokens.md`, `14-liquid-glass-adoption.md` | Light/dark/high-contrast variants for adaptive glass surfaces |
+| HIG Sliders | https://developer.apple.com/design/human-interface-guidelines/sliders | Component exception | `12-hig-components-inputs.md`, `15-liquid-glass-controls.md` | Direct-manipulation controls may take on glass while active; translate as active thumb/track feedback |
+| HIG Toggles | https://developer.apple.com/design/human-interface-guidelines/toggles | Component exception | `12-hig-components-inputs.md`, `15-liquid-glass-controls.md` | Binary controls may use transient glass emphasis; preserve clear on/off state |
+| Liquid Glass overview | https://developer.apple.com/documentation/technologyoverviews/liquid-glass | Platform-informed transferable | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Material hierarchy, continuity, platform differences, fallback planning |
+| Adopting Liquid Glass | https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass | Core transferable / Apple-specific APIs inside | `14-liquid-glass-adoption.md` | Migration checklist for controls, navigation, toolbars, modals, layout, search, and icons |
+| Landmarks: Building an app with Liquid Glass | https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass | SwiftUI sample / pattern extraction | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Background extension, toolbar grouping, horizontal scroll under sidebars, custom badges, app icon layers |
+| Applying Liquid Glass to custom views | https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views | Apple API behavior / transferable grouping model | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `09-motion-templates.md` | Custom glass shape, grouping, morph, performance, accessibility fallback |
+| SwiftUI `glassEffect(_:in:)` | https://developer.apple.com/documentation/SwiftUI/View/glassEffect(_:in:) | Apple API behavior | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md` | Apply material after appearance-defining modifiers; translate to one final composited control shape |
+| SwiftUI `Glass.regular` | https://developer.apple.com/documentation/SwiftUI/Glass/regular | Variant model | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md` | Default readable glass for text-heavy, control-dense, or unpredictable backgrounds |
+| SwiftUI `Glass.clear` | https://developer.apple.com/documentation/SwiftUI/Glass/clear | Variant model | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md` | Rich media overlays; add dimming on bright backgrounds when contrast needs it |
+| SwiftUI `Glass.interactive(_:)` | https://developer.apple.com/documentation/SwiftUI/Glass/interactive(_:) | Interaction model | `15-liquid-glass-controls.md`, `09-motion-templates.md` | Touch/pointer reaction for custom glass controls |
+| SwiftUI `GlassEffectContainer` | https://developer.apple.com/documentation/swiftui/glasseffectcontainer | Motion/performance model | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Group related glass shapes, enable blend/morph, avoid excessive containers |
+| SwiftUI `glassEffectUnion` | https://developer.apple.com/documentation/SwiftUI/View/glassEffectUnion(id:namespace:) | Grouping model | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Combine multiple views into one resting material shape |
+| SwiftUI `glassEffectID` | https://developer.apple.com/documentation/SwiftUI/View/glassEffectID(_:in:) | Continuity model | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Stable IDs for morphing glass elements between states |
+| SwiftUI `GlassEffectTransition` | https://developer.apple.com/documentation/swiftui/glasseffecttransition | Transition model | `09-motion-templates.md` | Entry/exit continuity for glass surfaces |
+| SwiftUI glass button styles | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glass | Apple API behavior / control styling | `15-liquid-glass-controls.md` | Default glass button behavior and states |
+| SwiftUI glass prominent button style | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glassProminent | Apple API behavior / control emphasis | `15-liquid-glass-controls.md` | Prominent glass primary actions; use one emphasized action per local group |
+
+## 5. Foundations
 
 | Apple doc | URL | Local extraction | Frontend use |
 |---|---|---|---|
@@ -52,7 +80,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Writing | https://developer.apple.com/design/human-interface-guidelines/writing | `04-accessibility.md`, `11-hig-foundations-patterns.md` | Concise labels, action copy, error/help text |
 | SF Symbols | https://developer.apple.com/design/human-interface-guidelines/sf-symbols | `11-hig-foundations-patterns.md`, `13-platform-resources-technologies.md` | Symbol weight/scale, icon fallback, license awareness |
 
-## 5. Platform design
+## 6. Platform design
 
 | Apple doc | URL | Applicability | Local extraction | Frontend use |
 |---|---|---|---|---|
@@ -64,7 +92,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Designing for visionOS | https://developer.apple.com/design/human-interface-guidelines/designing-for-visionos | Scenario inspiration / Apple-only when targeting visionOS | `13-platform-resources-technologies.md`, `09-motion-templates.md` | Extract depth comfort and material hierarchy; do not fake spatial OS chrome |
 | Spatial layout | https://developer.apple.com/design/human-interface-guidelines/spatial-layout | Scenario inspiration / Apple-only when targeting visionOS | `13-platform-resources-technologies.md` | Use depth principles only when the target UI has spatial/layered needs |
 
-## 6. Patterns
+## 7. Patterns
 
 | Apple doc | URL | Local extraction | Frontend use |
 |---|---|---|---|
@@ -89,7 +117,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Ratings and reviews | https://developer.apple.com/design/human-interface-guidelines/ratings-and-reviews | `11-hig-foundations-patterns.md` | Prompt timing, respectful review requests |
 | Undo and redo | https://developer.apple.com/design/human-interface-guidelines/undo-and-redo | `12-hig-components-inputs.md` | Reversible actions, destructive alternatives |
 
-## 7. Components
+## 8. Components
 
 | Apple doc | URL | Local extraction | Frontend use |
 |---|---|---|---|
@@ -128,7 +156,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Page controls | https://developer.apple.com/design/human-interface-guidelines/page-controls | `12-hig-components-inputs.md` | Paged flat lists/carousels |
 | Status bars | https://developer.apple.com/design/human-interface-guidelines/status-bars | `13-platform-resources-technologies.md` | Safe area and device/system status |
 
-## 8. Inputs and feedback
+## 9. Inputs and feedback
 
 | Apple doc | URL | Local extraction | Frontend use |
 |---|---|---|---|
@@ -143,7 +171,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Eyes | https://developer.apple.com/design/human-interface-guidelines/eyes | `13-platform-resources-technologies.md` | Apple-only input; use only for visionOS or gaze-like products |
 | Digital Crown | https://developer.apple.com/design/human-interface-guidelines/digital-crown | `13-platform-resources-technologies.md` | Apple-only input; use only as a continuous adjustment metaphor |
 
-## 9. Technologies and brand-sensitive features
+## 10. Technologies and brand-sensitive features
 
 | Apple doc | URL | Applicability | Local extraction | Frontend use |
 |---|---|---|---|---|
@@ -169,7 +197,7 @@ This file is the routing map. It lists where Apple official material lives and w
 | Complications | https://developer.apple.com/design/human-interface-guidelines/complications | Apple-only / scenario inspiration | `13-platform-resources-technologies.md` | Extract glanceable micro-status; do not mimic watchOS complications |
 | Watch faces | https://developer.apple.com/design/human-interface-guidelines/watch-faces | Apple-only | `13-platform-resources-technologies.md` | Only relevant for watchOS-specific design |
 
-## 10. Apple Design Resources
+## 11. Apple Design Resources
 
 | Resource | URL | Applicability | Local extraction | Frontend use |
 |---|---|---|---|---|
@@ -177,13 +205,21 @@ This file is the routing map. It lists where Apple official material lives and w
 | Apple Fonts | https://developer.apple.com/fonts/ | Apple-only / license-sensitive | `06-fonts.md`, `13-platform-resources-technologies.md` | SF/New York awareness; use system stack or legal fallback |
 | SF Symbols | https://developer.apple.com/sf-symbols/ | Apple-only / license-sensitive | `13-platform-resources-technologies.md` | Apple-only symbol assets; use licensed fallback icons off Apple platforms |
 | Apple Style Guide | https://support.apple.com/guide/applestyleguide/welcome/web | Core transferable for writing | `11-hig-foundations-patterns.md` | Product terms, writing style, capitalization |
-| Liquid Glass overview | https://developer.apple.com/documentation/technologyoverviews/liquid-glass | Platform-informed transferable | `07-motion.md`, `09-motion-templates.md` | Extract material hierarchy and continuity; provide fallback |
-| Applying Liquid Glass to custom views | https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views | Platform-informed transferable | `09-motion-templates.md` | Glass grouping/morph concepts; do not copy private rendering |
-| SwiftUI GlassEffectContainer | https://developer.apple.com/documentation/swiftui/glasseffectcontainer | Platform-informed transferable | `09-motion-templates.md` | Coordinated glass elements |
+| Liquid Glass overview | https://developer.apple.com/documentation/technologyoverviews/liquid-glass | Platform-informed transferable | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Extract material hierarchy and continuity; provide fallback |
+| Adopting Liquid Glass | https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass | Core transferable / Apple-specific APIs inside | `14-liquid-glass-adoption.md` | Migration checklist for controls, navigation, toolbars, modals, layout, search, icons |
+| Landmarks: Building an app with Liquid Glass | https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass | SwiftUI sample / pattern extraction | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Background extension, toolbar grouping, custom badges, app icon layers |
+| Landmarks background extension | https://developer.apple.com/documentation/SwiftUI/Landmarks-Applying-a-background-extension-effect | Pattern extraction | `14-liquid-glass-adoption.md` | Extend media under sidebar/inspector; keep overlay content separate |
+| Landmarks toolbar glass | https://developer.apple.com/documentation/SwiftUI/Landmarks-Refining-the-system-provided-glass-effect-in-toolbars | Pattern extraction | `14-liquid-glass-adoption.md` | Group toolbar actions with fixed spacers |
+| Landmarks custom badges | https://developer.apple.com/documentation/SwiftUI/Landmarks-Displaying-custom-activity-badges | Pattern extraction | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `09-motion-templates.md` | GlassEffectContainer, stable IDs, morphing status cluster |
+| SwiftUI glass button styles | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glass | Platform-informed transferable | `15-liquid-glass-controls.md` | Glass button/control states, fallbacks, accessibility |
+| SwiftUI glass prominent button style | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glassProminent | Platform-informed transferable | `15-liquid-glass-controls.md` | Prominent glass actions; use sparingly |
+| SwiftUI glassEffectID | https://developer.apple.com/documentation/SwiftUI/View/glassEffectID(_:in:) | Platform-informed transferable | `15-liquid-glass-controls.md`, `09-motion-templates.md` | Stable IDs for grouped morphing controls |
+| Applying Liquid Glass to custom views | https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views | Platform-informed transferable | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `09-motion-templates.md` | Glass grouping/morph concepts; do not copy private rendering |
+| SwiftUI GlassEffectContainer | https://developer.apple.com/documentation/swiftui/glasseffectcontainer | Platform-informed transferable | `14-liquid-glass-adoption.md`, `09-motion-templates.md` | Coordinated glass elements |
 | SwiftUI GlassEffectTransition | https://developer.apple.com/documentation/swiftui/glasseffecttransition | Platform-informed transferable | `09-motion-templates.md` | Glass entry/exit continuity |
 | SwiftUI navigationTransition | https://developer.apple.com/documentation/swiftui/view/navigationtransition%28_%3A%29 | Core transferable concept | `09-motion-templates.md` | Source/destination continuity |
 
-## 11. Crawl maintenance
+## 12. Crawl maintenance
 
 When updating this map:
 

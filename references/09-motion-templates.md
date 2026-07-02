@@ -27,6 +27,8 @@
 | watchOS glance transition | Scenario inspiration | 只用于小组件/状态卡片，不把 watch UI 搬到常规 Web/app |
 | Dynamic Island / Live Activity | Apple-only / concept transferable | 只抽取“持续任务的紧凑状态”原则；跨平台用 status chip/task bar，不克隆系统胶囊 |
 
+Liquid Glass 相关动画先读 `14-liquid-glass-adoption.md`；如果是按钮、工具栏、分段控件、开关、滑块、搜索、badge 或 popover/sheet 控件，再读 `15-liquid-glass-controls.md`，最后选择本文件第 8 节模板。
+
 ## 2. Template selector
 
 | 需求 | 首选模板 |

@@ -53,7 +53,7 @@ metadata:
 - **[Apple Design Resources](https://developer.apple.com/design/resources/)**（官方 UI Kits、模板、字体、SF Symbols、技术品牌资源）
 - **[Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web)**（Apple 官方编辑与排版规范）
 - **Apple.com 页面结构分析**（布局模式、间距规律的逆向分析）
-- **Motion 设计标准**（Apple HIG Motion/Loading/Materials、Liquid Glass、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
+- **Motion 设计标准**（Apple HIG Motion/Loading/Materials、Adopting Liquid Glass、Landmarks Liquid Glass sample、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
 - **[refinec/PingFangSC](https://github.com/refinec/PingFangSC)**（跨平台 PingFang SC fallback 字体文件，MIT License）
 
 ## 触发条件
@@ -143,7 +143,16 @@ metadata:
 
 ## 参考资料
 
-详细实现（CSS 代码、Tailwind 配置、完整组件规范）见 references 目录：
+详细实现（CSS 代码、Tailwind 配置、完整组件规范）见 references 目录。
+
+### Liquid Glass 专项
+
+| 文件 | 内容 |
+|---|---|
+| [14-liquid-glass-adoption.md](references/14-liquid-glass-adoption.md) | HIG Materials Liquid Glass、Adopting Liquid Glass、Landmarks 示例抽取、跨平台转译、导航/工具栏/图标检查表 |
+| [15-liquid-glass-controls.md](references/15-liquid-glass-controls.md) | Liquid Glass 控件规范：按钮、工具栏、分段控件、开关、滑块、搜索、badge、popover/sheet、状态、颜色、regular/clear 变体与降级 |
+
+### 通用参考
 
 | 文件 | 内容 |
 |---|---|
