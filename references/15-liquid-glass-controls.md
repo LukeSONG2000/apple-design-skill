@@ -1,6 +1,6 @@
 # Liquid Glass Controls
 
-Use this reference when a task asks for Liquid Glass-style controls, glass buttons, floating toolbars, segmented controls, toggles, sliders, search fields, badges, status chips, contextual menus, or action palettes. Read `14-liquid-glass-adoption.md` first for adoption boundaries and Landmarks sample routing, then use this file for concrete control design decisions.
+Use this reference when a task asks for Liquid Glass-style controls, glass buttons, floating toolbars, segmented controls, toggles, sliders, search fields, badges, status chips, contextual menus, or action palettes. Read `14-liquid-glass-adoption.md` first for adoption boundaries and Landmarks sample routing, then use this file for concrete control design decisions. For API examples, motion/transition code, color/Dark Mode variants, and UIKit/AppKit/Web fallbacks, also read `16-liquid-glass-api-motion-color.md`. For HIG/API linked-page routing, read `17-liquid-glass-deep-link-map.md`.
 
 ## Design intent
 

@@ -31,8 +31,8 @@
 |---|---|---|
 | Apple 风格页面 / landing page | `00-philosophy.md`, `01-tokens.md`, `03-patterns.md` | HIG: Layout, Color, Typography, Materials; Apple Design Resources |
 | 组件库 / design system | `01-tokens.md`, `02-components.md`, `05-tailwind-config.md`, `15-liquid-glass-controls.md` | HIG: Components, Inputs; SF Symbols; Design Resources UI Kits; Liquid Glass controls |
-| 动画 / 转场 / 滚动叙事 | `07-motion.md`, `09-motion-templates.md` | HIG: Motion, Loading, Materials, Accessibility; SwiftUI Liquid Glass docs |
-| Liquid Glass / 毛玻璃 | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `01-tokens.md`, `07-motion.md`, `09-motion-templates.md` | HIG: Materials; Adopting Liquid Glass; SwiftUI Landmarks sample; glassEffect docs |
+| 动画 / 转场 / 滚动叙事 | `07-motion.md`, `09-motion-templates.md`, `16-liquid-glass-api-motion-color.md`, `17-liquid-glass-deep-link-map.md` | HIG: Motion, Loading, Materials, Accessibility; SwiftUI Liquid Glass docs |
+| Liquid Glass / 毛玻璃 | `14-liquid-glass-adoption.md`, `15-liquid-glass-controls.md`, `16-liquid-glass-api-motion-color.md`, `17-liquid-glass-deep-link-map.md`, `01-tokens.md`, `07-motion.md`, `09-motion-templates.md` | HIG: Materials/Color/Layout/Motion/Scroll views/Toolbars/Sidebars/Tab bars; Adopting Liquid Glass; SwiftUI/UIKit/AppKit glass/material docs |
 | 中文字体统一 | `06-fonts.md`, `01-tokens.md` | Apple Fonts; HIG Typography; Apple Style Guide |
 | 官方文档查找 / URL 路由 | `10-apple-official-docs-map.md` | HIG / Design Resources / Developer Documentation URL map |
 | HIG Foundations / Patterns | `11-hig-foundations-patterns.md` | HIG: Accessibility, Color, Layout, Loading, Searching, Privacy, Modality |
@@ -135,7 +135,7 @@ Developer docs are useful when a frontend needs to mimic native behavior without
 
 | Apple API / topic | Transferable behavior |
 |---|---|
-| SwiftUI `glassEffect` / `GlassEffectContainer` / `GlassEffectTransition` | glass elements can group, morph, and transition as a material system; see `14-liquid-glass-adoption.md` for Landmarks extraction |
+| SwiftUI `glassEffect` / `GlassEffectContainer` / `GlassEffectTransition` | glass elements can group, morph, and transition as a material system; see `14-liquid-glass-adoption.md` for Landmarks extraction and `16-liquid-glass-api-motion-color.md` for code recipes |
 | SwiftUI `navigationTransition` | navigation can preserve source/destination continuity |
 | SwiftUI matched geometry concepts | cards, thumbnails, and controls can animate across layout contexts |
 | UIKit/AppKit presentation controllers | sheets, popovers, menus, and modals originate from context |
@@ -178,6 +178,17 @@ Before delivering an Apple-style frontend, check:
 - Adopting Liquid Glass: https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass
 - Landmarks Liquid Glass sample: https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass
 - Applying Liquid Glass to custom views: https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views
+- HIG Materials Liquid Glass: https://developer.apple.com/cn/design/human-interface-guidelines/materials#Liquid-Glass
+- HIG Color Liquid Glass: https://developer.apple.com/design/human-interface-guidelines/color#Liquid-Glass-color
+- HIG Scroll views scroll-edge effects: https://developer.apple.com/design/human-interface-guidelines/scroll-views
 - SwiftUI GlassEffectContainer: https://developer.apple.com/documentation/swiftui/glasseffectcontainer
 - SwiftUI GlassEffectTransition: https://developer.apple.com/documentation/swiftui/glasseffecttransition
+- SwiftUI backgroundExtensionEffect: https://developer.apple.com/documentation/SwiftUI/View/backgroundExtensionEffect()
+- SwiftUI scrollEdgeEffectStyle: https://developer.apple.com/documentation/SwiftUI/View/scrollEdgeEffectStyle(_:for:)
+- UIKit UIGlassEffect: https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- AppKit NSGlassEffectView: https://developer.apple.com/documentation/AppKit/NSGlassEffectView
 - SwiftUI navigationTransition: https://developer.apple.com/documentation/swiftui/view/navigationtransition%28_%3A%29
+- UIKit UIBlurEffect: https://developer.apple.com/documentation/UIKit/UIBlurEffect
+- UIKit UIVibrancyEffect: https://developer.apple.com/documentation/UIKit/UIVibrancyEffect
+- AppKit NSVisualEffectView.BlendingMode: https://developer.apple.com/documentation/AppKit/NSVisualEffectView/BlendingMode-swift.enum
+- SwiftUI Material: https://developer.apple.com/documentation/SwiftUI/Material

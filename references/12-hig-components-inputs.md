@@ -1,6 +1,6 @@
 # HIG Components and Inputs Extraction
 
-This file converts Apple HIG Components and Inputs into semantic frontend behavior. Use [02-components.md](02-components.md) for visual recipes, [09-motion-templates.md](09-motion-templates.md) for animation templates, and [15-liquid-glass-controls.md](15-liquid-glass-controls.md) when the component needs a Liquid Glass control treatment.
+This file converts Apple HIG Components and Inputs into semantic frontend behavior. Use [02-components.md](02-components.md) for visual recipes, [09-motion-templates.md](09-motion-templates.md) for animation templates, [15-liquid-glass-controls.md](15-liquid-glass-controls.md) when the component needs a Liquid Glass control treatment, and [16-liquid-glass-api-motion-color.md](16-liquid-glass-api-motion-color.md) when implementation code, transition behavior, color, or Dark Mode is involved.
 
 ## 1. Component decision map
 

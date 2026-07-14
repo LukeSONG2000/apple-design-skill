@@ -1,6 +1,6 @@
 # Liquid Glass Adoption and Landmarks Case Study
 
-Use this reference when a task mentions Liquid Glass, glass materials, translucent navigation, toolbar grouping, sidebar/inspector overlays, scroll-edge readability, or Apple-style app icons. It consolidates Apple 2026 guidance from the official adoption article, the SwiftUI Landmarks Liquid Glass article, linked Landmarks topic pages, and the local sample archive at `/Users/lukesong/Downloads/LandmarksBuildingAnAppWithLiquidGlass.zip`. For detailed control-level recipes, read `15-liquid-glass-controls.md`.
+Use this reference when a task mentions Liquid Glass, glass materials, translucent navigation, toolbar grouping, sidebar/inspector overlays, scroll-edge readability, or Apple-style app icons. It consolidates Apple 2026 guidance from the official adoption article, the SwiftUI Landmarks Liquid Glass article, linked Landmarks topic pages, and the local sample archive at `/Users/lukesong/Downloads/LandmarksBuildingAnAppWithLiquidGlass.zip`. For detailed control-level recipes, read `15-liquid-glass-controls.md`; for API, motion/transition, color/Dark Mode, UIKit/AppKit, and Web code examples, read `16-liquid-glass-api-motion-color.md`; for official related-link routing, read `17-liquid-glass-deep-link-map.md`.
 
 ## Source map
 
@@ -8,7 +8,9 @@ Use this reference when a task mentions Liquid Glass, glass materials, transluce
 |---|---|---|
 | HIG Materials: Liquid Glass | Core material definition, functional-layer rule, regular/clear variants, standard-material boundary | Start here for material choice and hierarchy |
 | HIG Color: Liquid Glass color | Accent/tint rules, monochrome controls over colorful content, primary action emphasis | Use before adding color to glass controls |
+| HIG Layout / Motion / Scroll views / Toolbars / Sidebars / Tab bars / Buttons / App icons / Widgets | Additional Liquid Glass design implications across layout, motion, scroll-edge readability, bars, icon layers, and widget appearances | Use `16-liquid-glass-api-motion-color.md` for categorized extraction/code and `17-liquid-glass-deep-link-map.md` for URL routing |
 | SwiftUI custom Liquid Glass docs | API behavior: glassEffect, regular/clear, interactive, container, union, IDs, transitions, performance | Use for Apple API translation and Web/client analogs |
+| UIKit/AppKit material docs | `UIGlassEffect`, `UIBlurEffect`, `UIVibrancyEffect`, `NSGlassEffectView`, `NSVisualEffectView.BlendingMode` | Use when translating to native clients or standard-material fallbacks |
 | Adopting Liquid Glass | Migration checklist across visual refresh, icons, controls, navigation, toolbars, modals, layout, search, and platforms | Start here for audit or redesign tasks |
 | Landmarks: Building an app with Liquid Glass | Concrete SwiftUI case study for iOS, iPadOS, and macOS | Use for implementation pattern extraction |
 | Landmarks background extension topic | Media bleeding under sidebar/inspector without moving foreground content | Use for hero media, split view, inspector layouts |

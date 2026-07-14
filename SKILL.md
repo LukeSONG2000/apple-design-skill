@@ -151,6 +151,8 @@ metadata:
 |---|---|
 | [14-liquid-glass-adoption.md](references/14-liquid-glass-adoption.md) | HIG Materials Liquid Glass、Adopting Liquid Glass、Landmarks 示例抽取、跨平台转译、导航/工具栏/图标检查表 |
 | [15-liquid-glass-controls.md](references/15-liquid-glass-controls.md) | Liquid Glass 控件规范：按钮、工具栏、分段控件、开关、滑块、搜索、badge、popover/sheet、状态、颜色、regular/clear 变体与降级 |
+| [16-liquid-glass-api-motion-color.md](references/16-liquid-glass-api-motion-color.md) | Liquid Glass API、动画/过渡、色彩/深色模式、UIKit/AppKit/Web fallback 与分类示例代码 |
+| [17-liquid-glass-deep-link-map.md](references/17-liquid-glass-deep-link-map.md) | Liquid Glass 官方深度链接地图：HIG 关联页、SwiftUI/UIKit/AppKit API、导航/滚动/背景扩展、Apple-only 边界与调用路线 |
 
 ### 通用参考
 
