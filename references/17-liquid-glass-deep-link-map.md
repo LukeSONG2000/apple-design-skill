@@ -37,6 +37,8 @@ Classification rule:
 | Decide whether glass belongs in the UI | HIG Materials, Adopting Liquid Glass | `14`, `15`, `16` |
 | Pick regular vs clear glass | HIG Materials, `Glass.regular`, `Glass.clear` | `14`, `15`, `16` |
 | Add custom glass to a SwiftUI control | Applying Liquid Glass to custom views, `glassEffect`, `GlassEffectContainer` | `15`, `16` |
+| Use native Liquid Glass menu transitions | `UIButtonConfiguration.glassButtonConfiguration`, `UIButton.menu`, `UIMenu`, WWDC25 Meet Liquid Glass, WWDC25 What's new in UIKit | `15`, `16`, this file |
+| Match Apple's SwiftUI `View styles` Liquid Glass list | SwiftUI View styles, Styling views with Liquid Glass group | `16`, this file |
 | Design toolbar/tab/sidebar glass | HIG Toolbars, Tab bars, Sidebars, Adopting Liquid Glass navigation/toolbars | `15`, `16`, this file |
 | Protect readability while scrolling | HIG Scroll views, `scrollEdgeEffectStyle`, `safeAreaBar`, UIKit/AppKit scroll edge APIs | `16`, this file |
 | Extend media under a sidebar/inspector | Adopting Liquid Glass navigation, Landmarks background extension, `backgroundExtensionEffect`, UIKit/AppKit background extension views | `14`, `16`, this file |
@@ -54,6 +56,28 @@ Classification rule:
 | https://developer.apple.com/design/human-interface-guidelines/color#Liquid-Glass-color | Design support | Tint sparingly; prefer one prominent material-tinted action; test against resting content |
 | https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views | Primary implementation guide | Custom shapes, interactivity, containers, unions, morph transitions, performance |
 | https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass | Primary case study | Extract real placement patterns: sidebar content, toolbar grouping, custom badges, app icon layers |
+
+## SwiftUI View Styles Coverage
+
+Apple's SwiftUI `View styles` page contains a `Styling views with Liquid Glass` group. If the user provides a screenshot of that group, verify against this matrix.
+
+| Screenshot item | Official URL | Covered locally | Note |
+|---|---|---|---|
+| View styles | https://developer.apple.com/documentation/swiftui/view-styles | This file, `10` | Top-level SwiftUI page; use as an index, not as implementation guidance by itself |
+| Applying Liquid Glass to custom views | https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views | `14`, `16`, `17` | Main custom Liquid Glass implementation article |
+| Landmarks: Building an app with Liquid Glass | https://developer.apple.com/documentation/swiftui/landmarks-building-an-app-with-liquid-glass | `14`, `16`, `17` | Case study for background extension, toolbar grouping, badges, app icon layers |
+| `glassEffect(_:in:)` | https://developer.apple.com/documentation/swiftui/view/glasseffect(_:in:) | `14`, `15`, `16`, `17` | Applies glass to a view; default shape is `DefaultGlassEffectShape` |
+| `glassEffectID(_:in:)` | https://developer.apple.com/documentation/swiftui/view/glasseffectid(_:in:) | `14`, `15`, `16`, `17` | Stable identity for morphing effects |
+| `glassEffectTransition(_:)` | https://developer.apple.com/documentation/swiftui/view/glasseffecttransition(_:) | `16`, `17` | Associates transition behavior with glass effects |
+| `glassEffectUnion(id:namespace:)` | https://developer.apple.com/documentation/swiftui/view/glasseffectunion(id:namespace:) | `14`, `15`, `16`, `17` | Combines related effects into a shared resting material shape |
+| `interactive(_:)` | https://developer.apple.com/documentation/swiftui/glass/interactive(_:) | `14`, `15`, `16`, `17` | Configures glass for touch/pointer reaction |
+| `GlassEffectContainer` | https://developer.apple.com/documentation/swiftui/glasseffectcontainer | `14`, `16`, `17` | Groups multiple glass shapes and enables morphing/performance optimization |
+| `GlassEffectTransition` | https://developer.apple.com/documentation/swiftui/glasseffecttransition | `16`, `17` | Defines add/remove transition behavior |
+| `GlassButtonStyle` | https://developer.apple.com/documentation/swiftui/glassbuttonstyle | `15`, `16`, `17` | Concrete style type behind standard glass buttons; prefer `.buttonStyle(.glass)` in guidance |
+| `GlassProminentButtonStyle` | https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle | `15`, `16`, `17` | Concrete prominent style type; prefer `.buttonStyle(.glassProminent)` and one primary action |
+| `DefaultGlassEffectShape` | https://developer.apple.com/documentation/swiftui/defaultglasseffectshape | `16`, `17` | Default glass effect shape; Apple defines it as a capsule |
+
+Coverage rule: when an item is a concrete SwiftUI type (`GlassButtonStyle`, `GlassProminentButtonStyle`, `DefaultGlassEffectShape`), keep it in API routing. For cross-platform work, translate the behavior and constraints rather than naming the type as a design-system requirement.
 
 ## HIG Design Support Links
 
@@ -81,6 +105,7 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 | API/page | Use | Cross-platform translation |
 |---|---|---|
 | https://developer.apple.com/documentation/SwiftUI/View/glassEffect(_:in:) | Apply glass behind a view inside a shape | One composited glass surface after final padding/shape styles |
+| https://developer.apple.com/documentation/swiftui/defaultglasseffectshape | Default shape for glass effects | Capsule/pill default; change shape only when the component geometry needs it |
 | https://developer.apple.com/documentation/SwiftUI/Glass | Variant namespace | Material token family |
 | https://developer.apple.com/documentation/SwiftUI/Glass/regular | Readable default glass | Default translucent control material |
 | https://developer.apple.com/documentation/SwiftUI/Glass/clear | Highly translucent media glass | Use only over rich media; add dimming for bright backgrounds |
@@ -93,6 +118,8 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glass | Standard glass button | Prefer native/design-system button before custom blur |
 | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glassProminent | Prominent glass button | One prominent action per local group |
 | https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glass(_:) | Configurable glass button style | Custom variant only after hierarchy and contrast checks |
+| https://developer.apple.com/documentation/swiftui/glassbuttonstyle | Concrete standard glass button style type | Document API parity; guide implementers to the semantic `.glass` style |
+| https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle | Concrete prominent glass button style type | Document API parity; keep prominent glass scarce |
 | https://developer.apple.com/documentation/SwiftUI/Material | Standard material, not Liquid Glass | Content-layer blur/vibrancy fallback |
 
 ### SwiftUI Navigation And Layout
@@ -131,6 +158,16 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/prominentGlass() | Prominent glass button | Primary action material tint |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/clearGlass() | Clear glass button | Media/rich-background controls |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/prominentClearGlass() | Prominent clear button | Rare emphasized media control |
+| https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration | Objective-C/UIKit glass button configuration | Native RN/plugin bridges that instantiate `UIButtonConfiguration` directly |
+| https://developer.apple.com/documentation/UIKit/UIButton/menu | Button-owned menu | Attach command hierarchy to the trigger so UIKit presents it from the button |
+| https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction | Primary-action menu trigger | Tap opens the menu instead of requiring a secondary/context gesture |
+| https://developer.apple.com/documentation/UIKit/UIMenu | Menu/submenu container | Preserve nested command hierarchy, inline groups, images, and selected states |
+| https://developer.apple.com/documentation/UIKit/UIAction | Leaf command element | Preserve action title, image, state, attributes, and selection callback |
+| https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline | Inline menu section | Flatten grouped commands with separators instead of deeper submenus |
+| https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/singleSelection | Single-selection menu | Use for picker-like command groups with one selected item |
+| https://developer.apple.com/documentation/UIKit/UIMenuElementState/on | Selected/checkmark state | Preserve the selected item semantically instead of drawing a custom checkmark only |
+| https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/disabled | Disabled menu item | Keep unavailable commands visible but disabled when discoverability matters |
+| https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive | Destructive menu item | Use semantic destructive styling for irreversible or risky actions |
 | https://developer.apple.com/documentation/UIKit/UIBlurEffect | Standard material fallback | Blur effect below content layer or for legacy material |
 | https://developer.apple.com/documentation/UIKit/UIVibrancyEffect | Foreground vibrancy | Keep icons/text vivid above blur |
 | https://developer.apple.com/documentation/UIKit/UIVisualEffectView | Container for visual effects | Native fallback; not equivalent to full Liquid Glass |
@@ -145,6 +182,22 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 | https://developer.apple.com/documentation/UIKit/UIView/cornerConfiguration-7l0ja | View corner configuration | Avoid unrelated radius values inside rounded containers |
 | https://developer.apple.com/documentation/UIKit/UISearchTab | Semantic search tab | Separate search affordance in top-level navigation |
 | https://developer.apple.com/documentation/UIKit/UIFocusItem | tvOS focus participation | Apple TV/kiosk only unless target has focus navigation |
+
+### UIKit Native Menu Route
+
+Use this route when a button opens a menu, picker, command list, or nested action set on iOS/iPadOS 26+. Officially, Liquid Glass menu motion is a system behavior: the menu opens from the triggering bubble, and larger menu glass gets the system's thicker material treatment. In implementation terms, bridge the trigger as a native `UIButton`, assign a `UIMenu`, and set `showsMenuAsPrimaryAction` when tap should open the menu.
+
+Trigger choice:
+
+- Icon-only triggers can use a glass button configuration.
+- Title/picker triggers can stay visually quiet with a plain button configuration plus the system popup indicator.
+- Both routes should assign the menu to the button instead of showing a custom overlay from JavaScript.
+
+Transfer boundary:
+
+- iOS/iPadOS 26+ native apps or React Native/Flutter plugins can use this route directly.
+- Web, Android, and older iOS should preserve menu semantics with an anchored fallback, not attempt a pixel-perfect Liquid Glass clone.
+- SwiftUI custom glass APIs such as `GlassEffectContainer`, `glassEffectID`, and `glassEffectTransition` are for custom view groups; they are not the first choice when a standard system menu already models the interaction.
 
 ## AppKit API Map
 
@@ -316,9 +369,25 @@ Use mirrored or sampled media only as a background impression. Do not move reada
 - https://developer.apple.com/documentation/technologyoverviews/liquid-glass
 - https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass
 - https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views
+- https://developer.apple.com/documentation/swiftui/view-styles
 - https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffect(_:in:)
 - https://developer.apple.com/documentation/SwiftUI/GlassEffectContainer
 - https://developer.apple.com/documentation/SwiftUI/GlassEffectTransition
+- https://developer.apple.com/documentation/swiftui/glassbuttonstyle
+- https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
+- https://developer.apple.com/documentation/swiftui/defaultglasseffectshape
 - https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButton/menu
+- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIMenu
+- https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline
+- https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/singleSelection
+- https://developer.apple.com/documentation/UIKit/UIMenuElementState/on
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/disabled
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive
 - https://developer.apple.com/documentation/AppKit/NSGlassEffectView
+- https://developer.apple.com/videos/play/wwdc2025/219/
+- https://developer.apple.com/videos/play/wwdc2025/243/

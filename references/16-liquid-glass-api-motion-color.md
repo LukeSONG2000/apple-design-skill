@@ -14,6 +14,7 @@ Use this reference when a task needs Liquid Glass implementation detail, animati
 | `Glass.regular` / `Glass.clear` | Variant choice | Readable default vs rich-media overlay |
 | HIG Color: Liquid Glass color | Color and contrast | Accent placement, monochrome labels, light/dark/high-contrast variants |
 | HIG Color: System colors | Semantic color | Prefer dynamic system colors; define custom variants for light/dark/high contrast |
+| UIKit native menu button route | UIKit API / system menu transition | Prefer `UIButtonConfiguration.glassButtonConfiguration` + `UIButton.menu` + `showsMenuAsPrimaryAction` + `UIMenu`/`UIAction` when the interaction is a menu |
 | SwiftUI `Material` | Standard material fallback | Content-layer blur/vibrancy, not Liquid Glass |
 | UIKit `UIBlurEffect` / `UIVibrancyEffect` | UIKit standard material fallback | Blur behind `UIVisualEffectView`; vibrant foreground labels/icons |
 | AppKit `NSVisualEffectView.BlendingMode` | macOS standard material fallback | Blend behind window or within current window |
@@ -52,6 +53,7 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 - Use direct manipulation for sliders/toggles and pressed controls. The active part can become glass-like while the rest of the form remains standard.
 - Prefer `GlassEffectContainer` for multiple glass shapes so the system can optimize rendering and coordinate shape interaction.
 - Use stable IDs for morphing shapes. A morph without stable identity reads as a random dissolve.
+- For native menus on iOS/iPadOS 26+, do not re-create the bubble-to-menu expansion with custom scale, spring, or blur timing. Use a system `UIButton` with a `UIMenu`; UIKit owns the menu presentation, optical thickening, refraction/lensing, shadow, accessibility, and dismissal behavior.
 - Use matched geometry when elements are close enough to feel spatially related; use materialize/dissolve for elements that appear from unrelated positions.
 - Do not animate blur continuously. Animate position, scale, opacity, clip, radius, and state changes; let platform material rendering update discretely.
 - Respect reduced motion: replace morphs, parallax, and scroll-linked stretch with fade or instant layout changes.
@@ -82,7 +84,7 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 |---|---|---|
 | Web / enterprise UI | Transfer principles only | Use readable translucent controls, solid fallbacks, and CSS reduced-motion/transparency handling |
 | SwiftUI apps | Direct API use | Prefer system controls, `glassEffect`, `GlassEffectContainer`, button styles, scroll-edge APIs |
-| UIKit apps | Direct API use where available | Prefer standard bars/buttons; use `UIGlassEffect`/glass button configurations for custom high-value controls |
+| UIKit apps | Direct API use where available | Prefer standard bars/buttons/menus; use `UIGlassEffect`, glass button configurations, and `UIMenu` before custom rendering |
 | AppKit apps | Direct API use where available | Prefer `NSGlassEffectView` for glass and `NSVisualEffectView` for standard materials |
 | tvOS | Focus-specific | Liquid Glass appears on focus/navigation; avoid copying TV focus UI to regular Web |
 | widgets/icons | Apple-specific | Use as platform guidance only; do not generalize widget/icon rendering to app content |
@@ -92,9 +94,10 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 
 | Need | SwiftUI | UIKit | AppKit | Web/client translation |
 |---|---|---|---|---|
-| Standard glass button | `.buttonStyle(.glass)` | `UIButton.Configuration.glass()` | `NSButton.BezelStyle.glass` | Rounded translucent button with solid fallback |
-| Prominent primary glass | `.buttonStyle(.glassProminent)` | `.prominentGlass()` / `.prominentClearGlass()` | Use platform prominent/control style | One tinted primary surface per local group |
-| Custom glass shape | `.glassEffect(_:in:)` | `UIGlassEffect` | `NSGlassEffectView` | CSS backdrop-filter surface with contrast-safe fill |
+| Standard glass button | `.buttonStyle(.glass)` / `GlassButtonStyle` | `UIButton.Configuration.glass()` | `NSButton.BezelStyle.glass` | Rounded translucent button with solid fallback |
+| Prominent primary glass | `.buttonStyle(.glassProminent)` / `GlassProminentButtonStyle` | `.prominentGlass()` / `.prominentClearGlass()` | Use platform prominent/control style | One tinted primary surface per local group |
+| Menu from a glass trigger | Prefer `Menu`/system control before custom glass | `UIButtonConfiguration.glassButtonConfiguration`, `UIButton.menu`, `showsMenuAsPrimaryAction`, `UIMenu`, `UIAction` | Native menu where available | Native menu bridge first; fallback to anchored command menu with semantic parity |
+| Custom glass shape | `.glassEffect(_:in:)`; default shape is `DefaultGlassEffectShape` | `UIGlassEffect` | `NSGlassEffectView` | CSS backdrop-filter surface with contrast-safe fill; pill/capsule default |
 | Multiple glass shapes | `GlassEffectContainer(spacing:)` | Prefer standard controls; custom grouping if needed | Prefer standard controls; custom grouping if needed | One grouped layer; animate transforms and radius |
 | Resting union | `glassEffectUnion(id:namespace:)` | N/A | N/A | Shared wrapper/background spanning related items |
 | Transition identity | `glassEffectID(_:in:)` | N/A | N/A | Stable IDs for shared-element animation |
@@ -342,6 +345,52 @@ doneButton.addAction(UIAction { _ in
 
 Use `glass()`, `prominentGlass()`, `clearGlass()`, or `prominentClearGlass()` for buttons instead of hand-building button blur. On tvOS, these styles apply glass even outside focus, so test focus and unfocused states.
 
+### UIKit native menu from a glass trigger
+
+Use this route when a glass button opens a menu, command list, picker, or nested action set. It matches the official model more closely than a custom React Native/Web animation because UIKit presents the menu from the button and owns the Liquid Glass expansion.
+
+Control choice:
+
+- Use `glassButtonConfiguration` for icon-only or compact floating menu triggers.
+- Use `plainButtonConfiguration` with the system popup indicator for title/picker triggers that should stay visually quiet until the menu opens.
+- Use SF Symbols at the surrounding control weight; `regular` is usually the right default for compact menu triggers.
+- Assign `menu` and `showsMenuAsPrimaryAction` in both cases so the trigger, menu, accessibility behavior, and dismissal remain system-owned.
+
+```objc
+UIButtonConfiguration *configuration = nil;
+if (@available(iOS 26.0, *)) {
+  configuration = [UIButtonConfiguration glassButtonConfiguration];
+} else {
+  configuration = [UIButtonConfiguration borderedButtonConfiguration];
+}
+
+configuration.cornerStyle = UIButtonConfigurationCornerStyleCapsule;
+configuration.image = [UIImage systemImageNamed:@"plus"];
+configuration.preferredSymbolConfigurationForImage =
+  [UIImageSymbolConfiguration configurationWithPointSize:17
+                                                  weight:UIImageSymbolWeightRegular];
+
+UIButton *button = [UIButton buttonWithConfiguration:configuration primaryAction:nil];
+UIAction *newItem = [UIAction actionWithTitle:@"New"
+                                        image:[UIImage systemImageNamed:@"doc.badge.plus"]
+                                   identifier:nil
+                                      handler:^(__kindof UIAction *action) {
+  // Handle selection.
+}];
+button.menu = [UIMenu menuWithChildren:@[newItem]];
+button.showsMenuAsPrimaryAction = YES;
+```
+
+Menu semantics to preserve when bridging from React Native, Flutter, or another client layer:
+
+- Convert hierarchical data to `UIMenu` for submenus and `UIAction` for leaf actions.
+- Use SF Symbols/system images when available; keep icon weight aligned with surrounding button symbols.
+- Map selected items to the menu element "on" state, disabled items to disabled attributes, and destructive operations to destructive attributes.
+- Use inline menu sections and single-selection options when the structure is a grouped command set rather than a deeper navigation step.
+- On iOS 26+ prefer this native route for menu triggers; on iOS 25 and below, Android, and Web, use a semantic anchored menu fallback with reduced-motion and reduced-transparency handling. Do not claim the fallback is a full Liquid Glass material.
+
+Use SwiftUI `GlassEffectContainer`, `glassEffectID`, and custom matched geometry only for custom glass view groups that cannot be represented by a system menu or standard control.
+
 ### UIKit standard material fallback
 
 ```swift
@@ -524,14 +573,30 @@ For complex Web morphs, use shared-layout animation only if the source and desti
 - https://developer.apple.com/documentation/UIKit/UIVibrancyEffect
 - https://developer.apple.com/documentation/AppKit/NSVisualEffectView/BlendingMode-swift.enum
 - https://developer.apple.com/documentation/SwiftUI/Material
+- https://developer.apple.com/documentation/swiftui/view-styles
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffect(_:in:)
 - https://developer.apple.com/documentation/SwiftUI/GlassEffectContainer
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectUnion(id:namespace:)
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectID(_:in:)
 - https://developer.apple.com/documentation/SwiftUI/GlassEffectTransition
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectTransition(_:)
+- https://developer.apple.com/documentation/swiftui/glassbuttonstyle
+- https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
+- https://developer.apple.com/documentation/swiftui/defaultglasseffectshape
 - https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButton/menu
+- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIMenu
+- https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline
+- https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/singleSelection
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/disabled
+- https://developer.apple.com/documentation/UIKit/UIMenuElementState/on
 - https://developer.apple.com/documentation/AppKit/NSGlassEffectView
+- https://developer.apple.com/videos/play/wwdc2025/219/
+- https://developer.apple.com/videos/play/wwdc2025/243/
 - https://developer.apple.com/design/human-interface-guidelines/layout
 - https://developer.apple.com/design/human-interface-guidelines/motion
 - https://developer.apple.com/design/human-interface-guidelines/scroll-views

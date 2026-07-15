@@ -287,10 +287,13 @@ Structure:
 - trigger and popover should feel materially related
 - popover arrow/anchor points to the source control where platform supports it
 - menu items use standard icons for common commands when available
+- on iOS/iPadOS 26+, if the interaction is a menu or command list, prefer a native `UIButton` + `UIMenu` route before custom glass animation
+- icon menu triggers can use a glass button; title/picker triggers can use a plain button with the system popup indicator
 
 Behavior:
 
 - menu reveals from the trigger, not from an unrelated edge
+- native UIKit menus should use `UIButton.menu` and `showsMenuAsPrimaryAction`; let the system own the bubble-to-menu Liquid Glass transition
 - destructive actions need separation and semantic styling
 - top menu actions should match swipe/contextual actions where applicable
 
@@ -299,6 +302,7 @@ Avoid:
 - bottom sheets for every menu on desktop/tablet
 - menu blur so strong that item text loses contrast
 - decorative icons on every menu item
+- custom spring/scale/blur timelines that imitate a system menu when a native menu can represent the same hierarchy
 
 ### 10. Sheet and inspector controls
 
@@ -416,6 +420,7 @@ This is a platform-neutral starting point for Web prototypes. Tune per brand, ba
 - [ ] Does reduced motion remove morphing and scroll-linked movement?
 - [ ] Are icon-only controls labeled for assistive tech?
 - [ ] Are selected, disabled, loading, and error states distinguishable without color alone?
+- [ ] For iOS/iPadOS 26+ menu triggers, did you use native `UIButton` + `UIMenu` before building a custom glass menu?
 - [ ] Are touch targets, focus rings, and keyboard order correct?
 - [ ] Is the blur layer static or threshold-based rather than continuously animated?
 
@@ -430,6 +435,16 @@ This is a platform-neutral starting point for Web prototypes. Tune per brand, ba
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectID(_:in:)
 - https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glass
 - https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glassProminent
+- https://developer.apple.com/documentation/swiftui/glassbuttonstyle
+- https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButton/menu
+- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIMenu
+- https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIMenuElementState/on
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/disabled
+- https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive
 - https://developer.apple.com/documentation/SwiftUI/Glass/regular
 - https://developer.apple.com/documentation/SwiftUI/Glass/clear
 - https://developer.apple.com/documentation/SwiftUI/Glass/interactive(_:)
