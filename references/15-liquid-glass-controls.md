@@ -12,6 +12,21 @@ Liquid Glass controls sit in the top functional layer of an interface. They shou
 - Keep glass groups sparse. One well-placed glass action cluster is stronger than many competing translucent controls.
 - Motion must explain state, grouping, or continuity; do not animate glass just because it can shimmer.
 
+## Native vs custom UIKit controls
+
+On iOS/iPadOS 26+, separate system-owned Liquid Glass from app-owned custom glass:
+
+| Component | Preferred route | Do not replace with |
+|---|---|---|
+| Top-level task/file/skill tab bar | `UITabBar` + `UITabBarItem` | Three custom `UIGlassEffect` buttons or hand-authored selected backgrounds |
+| Local mode segmented control | `UISegmentedControl` | Custom selected platter, custom blur/refraction, or hand-authored spring when native iOS 26 control is available |
+| Add button that opens actions | `UIButtonConfiguration.glassButtonConfiguration` + `UIMenu` | Custom spring/blur menu morph |
+| Title or picker that opens a menu | `UIButtonConfiguration.plainButtonConfiguration` + custom collapsed title layout + `UIMenu` | Visible fake glass capsule when the collapsed state should be transparent |
+| Search/refresh/input/composite controls | `UIGlassEffect` inside `UIVisualEffectView` | Standard tab/segment/menu/navigation components |
+| Android, Web, or iOS 25 and below | `BlurView`, CSS, `UIBlurEffect`, or opaque fallback | Claims of exact native Liquid Glass parity |
+
+Rule: use `UIGlassEffect` for custom glass containers, not to explain or rebuild standard UIKit components like `UITabBar` or `UISegmentedControl`. For standard controls, let UIKit own material, hit testing, accessibility, selected states, and transition behavior.
+
 ## HIG Materials control rules
 
 ### Functional layer first
@@ -172,6 +187,15 @@ Cross-platform translation:
 
 Use for local mode switching, filters, view mode changes, and short mutually exclusive choices.
 
+Native iOS/iPadOS 26 route:
+
+- Use `UISegmentedControl` for two-to-five related choices such as `Installed` / `Store`.
+- Configure semantic state through `selectedSegmentIndex`; handle changes with `UIControlEventValueChanged`.
+- Keep `momentary = NO` for persistent local mode selection. Use momentary behavior only when segments perform actions without a retained selected state.
+- Use equal-width segments when labels are similar; `apportionsSegmentWidthsByContent = NO` is appropriate for balanced two-option controls.
+- Do not set custom selected backgrounds, shadows, blur, refraction, or animation parameters when the native iOS 26 control is active. UIKit owns the Liquid Glass track, floating selector, press feedback, and switching animation.
+- `selectedSegmentTintColor`, title attributes, segment widths, content offsets, and overall frame are app-controlled API surfaces. The internal selected platter size, glass intensity, shadow elevation, edge relief, and system animation curve are not independently adjustable; switch to a custom fallback only when those internals must be art-directed.
+
 Structure:
 
 - one shared glass track
@@ -180,7 +204,8 @@ Structure:
 
 Behavior:
 
-- selected thumb glides 150-250ms using transform
+- on native iOS/iPadOS 26, let UIKit animate selected changes
+- on Web, Android, iOS 25 and below, or manual fallback, selected thumb can glide 150-250ms using transform
 - content switches with crossfade or fast slide, not with large page movement
 - selected state must include text/shape change, not color alone
 
@@ -188,6 +213,7 @@ Avoid:
 
 - more than 5 segments
 - using segmented control as global navigation
+- describing native `UISegmentedControl` as a `UIGlassEffect` implementation
 - glass over high-frequency table filters where a solid chip group is clearer
 
 ### 5. Toggle / switch
@@ -288,12 +314,12 @@ Structure:
 - popover arrow/anchor points to the source control where platform supports it
 - menu items use standard icons for common commands when available
 - on iOS/iPadOS 26+, if the interaction is a menu or command list, prefer a native `UIButton` + `UIMenu` route before custom glass animation
-- icon menu triggers can use a glass button; title/picker triggers can use a plain button with the system popup indicator
+- icon menu triggers can use `glassButtonConfiguration`; title/picker triggers can use `plainButtonConfiguration` plus a custom title/chevron layout
 
 Behavior:
 
 - menu reveals from the trigger, not from an unrelated edge
-- native UIKit menus should use `UIButton.menu` and `showsMenuAsPrimaryAction`; let the system own the bubble-to-menu Liquid Glass transition
+- native UIKit menus should use `UIButton.menu` and `UIControl.showsMenuAsPrimaryAction`; let the system own the bubble-to-menu Liquid Glass transition
 - destructive actions need separation and semantic styling
 - top menu actions should match swipe/contextual actions where applicable
 
@@ -421,6 +447,9 @@ This is a platform-neutral starting point for Web prototypes. Tune per brand, ba
 - [ ] Are icon-only controls labeled for assistive tech?
 - [ ] Are selected, disabled, loading, and error states distinguishable without color alone?
 - [ ] For iOS/iPadOS 26+ menu triggers, did you use native `UIButton` + `UIMenu` before building a custom glass menu?
+- [ ] For iOS/iPadOS 26+ tab navigation, did you use `UITabBar`/`UITabBarItem` instead of custom `UIGlassEffect` buttons?
+- [ ] For iOS/iPadOS 26+ local mode selection, did you use `UISegmentedControl` before custom animated segment glass?
+- [ ] Is `UIGlassEffect` reserved for custom glass containers such as search/refresh/input surfaces?
 - [ ] Are touch targets, focus rings, and keyboard order correct?
 - [ ] Is the blur layer static or threshold-based rather than continuously animated?
 
@@ -437,11 +466,19 @@ This is a platform-neutral starting point for Web prototypes. Tune per brand, ba
 - https://developer.apple.com/documentation/SwiftUI/PrimitiveButtonStyle/glassProminent
 - https://developer.apple.com/documentation/swiftui/glassbuttonstyle
 - https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
+- https://developer.apple.com/documentation/UIKit/UITabBar
+- https://developer.apple.com/documentation/UIKit/UITabBarItem
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl/selectedSegmentTintColor
 - https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/plainButtonConfiguration
 - https://developer.apple.com/documentation/UIKit/UIButton/menu
-- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIControl/showsMenuAsPrimaryAction
 - https://developer.apple.com/documentation/UIKit/UIMenu
 - https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIContextMenuInteraction
+- https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIVisualEffectView
 - https://developer.apple.com/documentation/UIKit/UIMenuElementState/on
 - https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/disabled
 - https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive

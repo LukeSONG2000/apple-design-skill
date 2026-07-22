@@ -1,106 +1,93 @@
-# Apple Design Language — Frontend Skill
+# More Than Design
 
-将 Apple 设计语言（Apple.com + HIG + Apple Design Resources）应用到前端开发的 AI Skill。平台无关的 Design Token、Motion Token、Apple 官方文档地图、HIG 组件行为抽取、平台适配、Apple 资源/技术品牌指南、动画模板、组件模式和布局方案，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。
+面向前端与客户端开发的多平台官方设计规范 Skill。它与 `frontend-design` 同时使用，根据实际运行平台选择 Android/Material、Windows/Microsoft Fluent 或 Apple/HIG，并为 Web 按产品语境选择参考体系。
 
-## 数据来源
+## 平台路由
 
-本 Skill 的设计 Token 提取自以下**公开资源**，仅供学习与参考：
+| 目标 | 设计规范 | 开发文档 |
+|---|---|---|
+| Android 手机、平板、折叠屏 | [Android Mobile Design](https://developer.android.google.cn/design/ui/mobile)、[Material 3](https://m3.material.io/) | [Material 3 Develop](https://m3.material.io/develop)、[Android UI](https://developer.android.google.cn/develop/ui) |
+| Windows 桌面应用 | [Windows Design](https://learn.microsoft.com/en-us/windows/apps/design/)、[Fluent 2](https://fluent2.microsoft.design/) | [Windows development](https://developer.microsoft.com/zh-cn/windows/develop)、[WinUI 3](https://learn.microsoft.com/windows/apps/winui/winui3/) |
+| Apple 生态 | [Apple Design / HIG](https://developer.apple.com/cn/design/) | [Apple Developer Documentation](https://developer.apple.com/documentation/) |
+| Web | 结合品牌、工作流和现有组件库选择 | 项目技术栈优先，不伪装系统专属能力 |
 
-| 来源 | 说明 |
+Web 没有固定体系：消费、内容与创意产品倾向 Apple；企业生产力和桌面密集工作流倾向 Microsoft；移动优先、动态主题和跨窗口组件系统倾向 Material。条件相同且没有其他约束时，偏好为 Apple > Microsoft > Google。
+
+## 使用原则
+
+- 先判断目标平台、窗口、输入方式和技术栈，再查对应官方地图。
+- 原生平台优先标准组件和系统行为；不以自绘近似替代系统菜单、导航、材质或返回逻辑。
+- 样式与动效分开：颜色、字体、间距、shape、material 和 elevation 不与 motion 参数混写。
+- 跨平台只迁移任务语义和通用原则，控件解剖、系统材质、导航和平台 API 保留在原平台。
+- 每个分类条目链接到官方原文；二手文章仅可作为线索，不作为规范来源。
+- 无障碍覆盖键盘、触摸、指针、屏幕阅读器、文字缩放、高对比度、深浅色和减少动态。
+
+完整决策树见 [references/18-platform-routing.md](references/18-platform-routing.md)。
+
+## 内容地图
+
+### Material & Google Design
+
+| 文件 | 内容 |
 |---|---|
-| [Apple.com 主 CSS](https://www.apple.com) | 从公开样式表中提取的色值、字号、间距等数值 |
-| [Human Interface Guidelines (HIG)](https://developer.apple.com/cn/design/) | Apple 官方设计原则和组件规范 |
-| [Apple Design Resources](https://developer.apple.com/design/resources/) | 官方 UI Kits、模板、字体、SF Symbols、技术品牌资源 |
-| [Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web) | Apple 官方编辑与排版规范 |
-| Apple.com 页面结构 | 布局模式、间距规律的逆向分析 |
-| Motion 设计标准 | Apple HIG Motion/Loading/Materials、Liquid Glass、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN |
-| [refinec/PingFangSC](https://github.com/refinec/PingFangSC) | PingFang SC fallback 字体文件，MIT License |
+| [19-google-android-map.md](references/19-google-android-map.md) | Android Mobile Design、Material 3 和开发入口的官方深度链接地图 |
+| [20-material-foundations-styles.md](references/20-material-foundations-styles.md) | 无障碍、内容、Design Token、状态、布局、颜色、字体、elevation、shape、spacing、icon |
+| [21-material-components-map.md](references/21-material-components-map.md) | Material 3 全组件 overview/guidelines/specs/accessibility 索引 |
+| [22-material-motion.md](references/22-material-motion.md) | Motion physics、Expressive/Standard、Spatial/Effects、转场和 Web fallback |
 
-> **注意**：Apple、Apple Logo、Human Interface Guidelines 等为 Apple Inc. 的商标或版权内容。本项目仅作为设计学习与参考用途，不隶属于 Apple Inc.，也未获得其endorsement。
+### Microsoft Design
 
-## 快速使用
+| 文件 | 内容 |
+|---|---|
+| [23-microsoft-windows-map.md](references/23-microsoft-windows-map.md) | Windows Design、WinUI/Windows App SDK、Fluent 2 官方地图 |
+| [24-fluent-foundations-components.md](references/24-fluent-foundations-components.md) | Windows/Fluent 原则、Token、颜色、材质、布局、排版、无障碍和组件索引 |
+| [25-microsoft-motion.md](references/25-microsoft-motion.md) | Windows 原生 Motion 与 Fluent Web Motion 的独立规范 |
 
-### Claude Code（全局安装）
+### Apple Design
+
+- [Apple 官方覆盖地图](references/08-apple-docs-coverage.md)
+- [Apple 官方深度链接地图](references/10-apple-official-docs-map.md)
+- [HIG Foundations / Patterns](references/11-hig-foundations-patterns.md)
+- [HIG Components / Inputs](references/12-hig-components-inputs.md)
+- [平台、资源、字体和技术品牌](references/13-platform-resources-technologies.md)
+- [Liquid Glass adoption](references/14-liquid-glass-adoption.md)
+- [Liquid Glass controls](references/15-liquid-glass-controls.md)
+- [Liquid Glass API、Motion 与 Color](references/16-liquid-glass-api-motion-color.md)
+- [Liquid Glass 官方深度链接地图](references/17-liquid-glass-deep-link-map.md)
+
+### Apple.com 实现参考
+
+`references/00–07` 和 `09` 保留原有 Apple.com/HIG 风格的哲学、Token、Web 组件、布局、无障碍、Tailwind、字体和动画模板。它们属于 Apple/Web 专项，不作为 Android 或 Windows 的默认数值。
+
+## 安装
+
+### Codex
 
 ```bash
-# 推荐：按仓库名克隆，保留 Codex/Codex-compatible skill 名称
-git clone https://github.com/LukeSONG2000/apple-design-skill.git \
-  ~/.claude/commands/apple-design-skill
-
-# 如需兼容旧的 /apple-design 调用，也可以克隆为 legacy 目录名
-git clone https://github.com/LukeSONG2000/apple-design-skill.git \
-  ~/.claude/commands/apple-design
+git clone https://github.com/LukeSONG2000/more-than-design-skill.git \
+  ~/.codex/skills/more-than-design-skill
 ```
 
-### Codex（全局安装）
+### Claude Code
 
 ```bash
-# 克隆到 Codex 全局 skills 目录
-git clone https://github.com/LukeSONG2000/apple-design-skill.git \
-  ~/.codex/skills/apple-design-skill
+git clone https://github.com/LukeSONG2000/more-than-design-skill.git \
+  ~/.claude/commands/more-than-design-skill
 ```
 
-## 内容结构
-
-```
-apple-design-skill/
-├── agents/
-│   └── openai.yaml              # Codex UI 元数据
-├── assets/
-│   └── fonts/PingFangSC/        # woff2 + ttf 跨平台中文字体
-├── SKILL.md                    # Skill 主文件（Design Token + 组件模式）
-├── references/                 # 详细实现参考
-│   ├── 00-philosophy.md        # 设计哲学、HIG 六原则
-│   ├── 01-tokens.md            # 色彩、排版、间距、断点、圆角、阴影、毛玻璃
-│   ├── 02-components.md        # 按钮、导航栏、卡片、表单、模态框、Toast、页脚
-│   ├── 03-patterns.md          # Hero 区、双栏、三栏、图文区等页面布局模式
-│   ├── 04-accessibility.md     # 色彩对比度、Focus 管理、ARIA、屏幕阅读器
-│   ├── 05-tailwind-config.md   # Tailwind CSS 配置、CSS 变量版
-│   ├── 06-fonts.md             # PingFang SC 跨平台字体打包方案
-│   ├── 07-motion.md            # 独立 Motion Token、动效原则、reduced motion
-│   ├── 08-apple-docs-coverage.md # Apple 官方文档覆盖地图
-│   ├── 09-motion-templates.md  # Apple 风格动画模板库
-│   ├── 10-apple-official-docs-map.md # 爬取后的官方 URL 分类地图
-│   ├── 11-hig-foundations-patterns.md # HIG Foundations / Patterns 抽取
-│   ├── 12-hig-components-inputs.md # HIG Components / Inputs 抽取
-│   └── 13-platform-resources-technologies.md # 平台、资源、技术品牌
-```
+新命令使用 `/more-than-design`；已有 `/apple-design` 可继续作为兼容入口。
 
 ## 字体资源
 
-仓库内置 `PingFangSC` fallback 字体，用于非 Apple 设备保持统一中文观感；Apple 设备优先使用系统 `PingFang SC`，无需加载内置字体。
+仓库保留 [refinec/PingFangSC](https://github.com/refinec/PingFangSC) 的 PingFang SC fallback：非 Apple Web 使用 `woff2`，客户端可使用 `ttf`，Apple 设备优先系统字体。详细方案见 [references/06-fonts.md](references/06-fonts.md)。字体资源只服务 Apple 风格或明确需要统一中文观感的项目，不作为 Android/Windows 默认字体。
 
-| 平台 | 推荐格式 | 目录 |
-|---|---|---|
-| Web / PWA / Electron / Tauri WebView | `woff2` | `assets/fonts/PingFangSC/woff2` |
-| React Native / Flutter / Android / Windows 客户端 | `ttf` | `assets/fonts/PingFangSC/ttf` |
-| iOS / macOS 原生 | 系统字体 | 不需要打包 |
+## 验证状态
 
-Web 可直接引用 `assets/fonts/PingFangSC/pingfang-sc.css`。详细方案见 [references/06-fonts.md](references/06-fonts.md)。
+- 新增平台资料中的官方链接已逐项访问验证。
+- `skill-home validate --strict` 通过。
+- `skill-home scan --strict` 通过。
+- Codex、Agents frontend-design 触发描述和 Claude 镜像保持同步。
 
-## Motion 规范
+## 许可证与归属
 
-前端样式 token 与动画 token 分开维护。色彩、排版、间距、圆角、阴影、毛玻璃见 [references/01-tokens.md](references/01-tokens.md)；动画原则、duration/easing、模式矩阵、reduced motion 方案见 [references/07-motion.md](references/07-motion.md)；Apple 风格动画模板见 [references/09-motion-templates.md](references/09-motion-templates.md)。
-
-## Design Token 速查
-
-### 色彩
-
-| 用途 | 值 | 深色模式 |
-|---|---|---|
-| 正文 | `#1D1D1F` | `#F5F5F7` |
-| 次要文字 | `#6E6E73` | `#A1A1A6` |
-| 背景 | `#FFFFFF` | `#000000` |
-| 链接/主交互 | `#0071E3` | `#2997FF` |
-
-### 核心设计签名
-
-1. **大留白** — 内容不超过 980px 宽
-2. **毛玻璃** — 72% 不透明度 + 180% 饱和度 + 20px 模糊
-3. **品牌蓝仅交互** — `#0071E3` 只用于链接和按钮
-4. **聚焦环** — 键盘导航时显示，鼠标/触屏时隐藏
-5. **渐进式信息** — 大标题 → 副标题 → 正文
-
-## 许可证
-
-MIT License — 本项目仅供学习参考，Apple 相关设计资产版权归 Apple Inc. 所有。
+代码和原创整理采用 MIT License。Apple、Google、Material、Microsoft、Windows、Fluent 及相关商标、设计资源和文档归各自权利人所有。本项目用于设计学习与开发参考，不代表任何平台官方产品或背书。

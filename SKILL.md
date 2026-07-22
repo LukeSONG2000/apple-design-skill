@@ -1,8 +1,8 @@
 ---
-name: apple-design-skill
-description: Use alongside frontend-design for frontend UI, pages, components, styling, and motion as a companion Apple Design reference; keep frontend-design primary; add Apple.com/HIG tokens and motion cues.
+name: more-than-design-skill
+description: Use with frontend-design for platform-aware UI across Android/Material, Windows/Fluent, Apple/HIG, and context-sensitive web; keep native behavior, visual style, and motion distinct.
 license: MIT
-version: 1.2.1
+version: 1.3.0
 author: LukeSONG2000
 category: productivity
 tags:
@@ -11,7 +11,7 @@ tags:
   - planning
   - analysis
 metadata:
-  version: 1.2.1
+  version: 1.3.0
   category: productivity
   tags:
     - frontend
@@ -19,156 +19,136 @@ metadata:
     - planning
     - analysis
   namespace: "@LukeSONG2000"
-  description_zh: frontend-design 的 Apple Design 伴随参考层：在前端 UI、页面、组件、样式和动效任务中补充 Apple.com/HIG Token、动效、材料、平台适配和边界说明。
+  description_zh: frontend-design 的多平台设计伴随参考层：按 Android/Material、Windows/Microsoft Fluent、Apple/HIG 和 Web 项目语境路由官方规范，并分离样式、组件、行为与动效。
   author: LukeSONG2000
-  homepage: https://github.com/LukeSONG2000/apple-design-skill
+  homepage: https://github.com/LukeSONG2000/more-than-design-skill
   compatibility:
     claude_code: true
     codex: true
   claude:
-    legacy_name: apple-design
+    legacy_name: more-than-design
     auto_activate: false
 ---
 
-# Apple Design Language — Frontend Skill
+# More Than Design
 
-将 Apple 设计语言应用到前端开发。本 skill 提供平台无关的 Design Token、Motion Token、Apple 官方文档地图、HIG 组件行为抽取、平台适配、Apple 资源/技术品牌指南、动画模板和组件模式，适用于 Web、React Native、Flutter、SwiftUI 等任何前端技术栈。完整的 CSS/Tailwind 实现参考见 [references/](references/) 目录。
+在前端与客户端设计任务中，把目标平台的官方规范变成可执行的设计和实现约束。本 skill 与 `frontend-design` 同时使用：`frontend-design` 负责创意与实现，本 skill 负责平台路由、官方资料检索、组件语义、动效边界、跨平台翻译和验收。
 
-## 跨平台边界
+## 先判定平台
 
-本 skill 的目标是**跨平台参考 Apple 设计语言**，不是把 Apple 独有平台或系统能力照搬到 Web / Android / Windows / 企业客户端。
+| 目标 | 默认设计体系 | 默认开发体系 | 首读 |
+|---|---|---|---|
+| Android 手机、平板、折叠屏 | [Android Mobile Design](https://developer.android.google.cn/design/ui/mobile) + [Material 3](https://m3.material.io/) | [Jetpack Compose Material 3](https://m3.material.io/develop/android/jetpack-compose)，必要时 Android Views | [19-google-android-map.md](references/19-google-android-map.md) |
+| Windows 桌面应用 | [Windows Design](https://learn.microsoft.com/en-us/windows/apps/design/) + [Fluent 2](https://fluent2.microsoft.design/) | [WinUI 3](https://learn.microsoft.com/windows/apps/winui/winui3/) + Windows App SDK | [23-microsoft-windows-map.md](references/23-microsoft-windows-map.md) |
+| iPhone、iPad、Mac、Watch、TV、Vision、CarPlay | [Apple Design / HIG](https://developer.apple.com/cn/design/) | [Apple Developer Documentation](https://developer.apple.com/documentation/) | [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) |
+| Web | 按产品语境选择，不固定套用一个体系 | 项目现有框架优先 | [18-platform-routing.md](references/18-platform-routing.md) |
 
-- 默认抽取可迁移原则：层级、间距、语义色、可读性、输入反馈、加载、动效节奏、无障碍。
-- iOS / iPadOS / macOS / Apple.com 可作为主要跨平台参考。
-- watchOS / tvOS / visionOS / CarPlay / Dynamic Island / Live Activities / Digital Crown / Eyes 等只作为**场景启发或约束模型**，除非目标产品确实运行在对应平台或有等价输入/硬件场景。
-- Apple Pay / Sign in with Apple / Wallet / HealthKit / SF Symbols / Product Bezels / Apple Fonts 等属于**Apple 资源或技术品牌**，只在合规和平台支持时使用；跨平台默认提供中性 fallback。
-- 判断适用等级时先读 [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) 和 [13-platform-resources-technologies.md](references/13-platform-resources-technologies.md)。
+目标平台规则优先于视觉偏好。Android 不复刻 iOS 控件解剖，Windows 不套移动端导航，Apple 平台不以 Web 毛玻璃模拟系统材质。
 
-## 数据来源
+## Web 选择规则
 
-本 skill 的设计 Token 提取自以下公开资源：
+Web 没有单一默认体系。先服从现有产品、代码库和品牌，再按以下顺序判断；语境相同且无其他约束时，偏好为 Apple > Microsoft > Google。
 
-- **Apple.com 主 CSS**（公开样式表中提取的色值、字号、间距等数值）
-- **[Human Interface Guidelines](https://developer.apple.com/cn/design/)**（Apple 官方设计原则和组件规范）
-- **[Apple Design Resources](https://developer.apple.com/design/resources/)**（官方 UI Kits、模板、字体、SF Symbols、技术品牌资源）
-- **[Apple Style Guide](https://support.apple.com/zh-cn/guide/applestyleguide/welcome/web)**（Apple 官方编辑与排版规范）
-- **Apple.com 页面结构分析**（布局模式、间距规律的逆向分析）
-- **Motion 设计标准**（Apple HIG Motion/Loading/Materials、Adopting Liquid Glass、Landmarks Liquid Glass sample、Material、Fluent、Carbon、Atlassian、Spectrum、WCAG、MDN）
-- **[refinec/PingFangSC](https://github.com/refinec/PingFangSC)**（跨平台 PingFang SC fallback 字体文件，MIT License）
+- 消费产品、内容展示、创意工具、硬件或品牌叙事：优先 Apple 的内容层级、克制材料和连续动效。
+- 企业软件、生产力工具、桌面密集工作台、多窗格和键鼠工作流：优先 Microsoft Fluent。
+- 移动优先、跨尺寸应用、明确的组件系统、动态主题或 Google 生态：优先 Material 3。
+- 可借用另一体系的原则，但同一操作面不要混合相互竞争的组件结构、状态模型或导航语义。
 
-## 触发条件
+完整决策树、冲突处理和跨平台翻译见 [18-platform-routing.md](references/18-platform-routing.md)。
 
-当前端设计任务触发 `frontend-design` 时，也同时使用本 skill 作为 Apple Design 参考层；`frontend-design` 仍负责主创意和实现，本 skill 负责 Apple.com/HIG 的样式、动效、平台适配和边界校验。用户明确要求 Apple 风格、Apple 设计规范、Apple 动画/字体/毛玻璃，或跨平台参考 Apple 设计语言时，也单独触发。
+## 调用流程
 
-## 设计 Token
+1. 确认运行平台、输入方式、窗口形态、技术栈和已有设计系统。
+2. 从对应官方地图进入，不凭记忆套 Token；优先标准控件和平台组件。
+3. 将需求拆成 `foundation/style`、`component`、`behavior/pattern`、`motion`、`accessibility` 五类。
+4. 样式与动效分别查阅和实现。视觉数值不能代替交互行为，动效参数不能掩盖错误组件。
+5. 只把可迁移原则带到其他平台；把平台 API、系统材质、系统导航和硬件输入留在原平台。
+6. 按键盘、触摸、指针、屏幕阅读器、减少动态、深浅色、高对比度和窗口变化验收。
+7. 输出设计依据时链接到本 skill 中列出的官方原文，不把二手总结当规范来源。
 
-### 色彩
+## 核心约束
 
-| 用途 | 值 | 深色模式 |
-|---|---|---|
-| 正文 | `#1D1D1F` | `#F5F5F7` |
-| 次要文字 | `#6E6E73` | `#A1A1A6` |
-| 辅助文字 | `#86868B` | `#6E6E73` |
-| 背景 | `#FFFFFF` | `#000000` |
-| 次要背景 | `#F5F5F7` | `#1D1D1F` |
-| 链接/主交互 | `#0071E3` | `#2997FF` |
-| 链接悬停 | `#0077ED` | `#547EAE` |
+### 原生优先
 
-品牌蓝（`#0071E3`）只用于链接和按钮，不用于装饰。
+- Android：优先 Material 3 组件、系统返回、edge-to-edge、WindowInsets 和动态颜色；不要重绘系统行为。
+- Windows：优先 WinUI 控件、标题栏、命令系统、键盘/指针语义和 Mica/Acrylic 的官方用法。
+- Apple：优先 SwiftUI/UIKit/AppKit 标准控件。Liquid Glass 的系统组件外观与转场由系统负责，自定义玻璃只用于官方允许的自定义视图场景。
+- Web：使用项目现有组件库；从平台体系借语义、层级和动效，不伪装成不可用的系统控件。
 
-### 排版
+### 样式与动效分离
 
-- 字重：300（大标题）/ 400（正文）/ 600（小标题、标签）
-- 标题字间距：`-0.015em` ~ `-0.022em`
-- 行高：英文 1.33，中文 1.8
-- 基础字号：17px
-- 字体栈按平台选择：Apple 设备优先系统 `PingFang SC`，非 Apple 设备可使用内置 `Apple PingFang SC Fallback`；Web 使用 `woff2`，客户端/移动端使用 `ttf`
+- 样式包含颜色、字体、间距、形状、图标、材质和 elevation。
+- 动效包含状态变化、空间移动、转场、物理参数、编舞和 reduced motion。
+- Material 动效见 [22-material-motion.md](references/22-material-motion.md)，Microsoft 动效见 [25-microsoft-motion.md](references/25-microsoft-motion.md)，Apple 动效见 [07-motion.md](references/07-motion.md)、[09-motion-templates.md](references/09-motion-templates.md) 和 [16-liquid-glass-api-motion-color.md](references/16-liquid-glass-api-motion-color.md)。
 
-### 间距与尺寸
+### 平台专属能力
 
-- 区块间距 ≥ 40px，Hero 区间距 ≥ 80px
-- 标题 → 副标题 12px，副标题 → 正文 16px，正文 → CTA 20px
-- 圆角：按钮 8px / 卡片 12px / 大面板 20px / 药丸形 980px
-- 断点：320 / 735 / 1068 / 1441px
+- Android 专属或强绑定：Dynamic Color、Predictive Back、系统栏/WindowInsets、Android 小组件与通知模型。
+- Windows 专属或强绑定：Mica、Acrylic、Smoke、WinUI 标题栏、Windows 命令与窗口模型。
+- Apple 专属或强绑定：Liquid Glass 系统呈现、SF Symbols、Dynamic Island、Live Activities、CarPlay、visionOS 空间输入、Digital Crown。
+- 跨平台实现必须提供中性 fallback，并明确它是语义对应，不声称等同系统原生效果。
 
-### Motion
+## 无障碍底线
 
-动效规范单独维护在 [references/07-motion.md](references/07-motion.md)，动画模板维护在 [references/09-motion-templates.md](references/09-motion-templates.md)，不要与色彩、字体、间距、圆角等前端样式 token 混写。
+- 不把颜色、形状或动效作为唯一状态信号。
+- 保留可见焦点、键盘完整路径、语义名称、足够触控目标和文本缩放能力。
+- 支持深色、高对比度、减少动态、屏幕阅读器和不同输入方式。
+- 平台无障碍要求从各自官方入口核对：[Material accessibility](https://m3.material.io/foundations/overview/principles)、[Windows accessibility](https://learn.microsoft.com/en-us/windows/apps/design/accessibility/accessibility-overview)、[Apple accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility)。
 
-- 交互反馈：50-150ms
-- 常规转场：150-400ms
-- 低频大动画：500-600ms
-- 进入用 ease-out/deceleration，退出用 ease-in/acceleration，屏幕内移动用 standard/ease-in-out
-- 首选 `opacity` 和 `transform`，避免 `transition: all`
-- Liquid Glass 动效只用于层级、连续性和材料响应，不做通用 blur 装饰
-- 必须尊重 `prefers-reduced-motion`
+## 参考目录
 
-### 毛玻璃
-
-背景 72% 不透明度 + 180% 饱和度 + 20px 模糊。
-
-## 核心设计签名
-
-1. **大留白** — 元素间大量呼吸空间，内容不超过 980px 宽
-2. **毛玻璃** — 半透明 + 模糊，用于导航栏和遮罩层
-3. **品牌蓝仅交互** — 蓝色只出现在链接和按钮上
-4. **聚焦环** — 键盘导航时显示 2px 蓝色轮廓，鼠标/触屏时隐藏
-5. **渐进式信息** — 大标题 → 副标题 → 正文，层次分明，一眼扫到重点
-
-## 组件模式
-
-### 按钮
-
-- 主要：品牌蓝填充 + 白字 + 药丸形圆角 + 内边距 8×16px
-- 次要：品牌蓝文字 + 右箭头 → + 无边框无背景
-- 深色背景上：白字 + 白色 1px 边框
-
-### 导航栏
-
-固定顶部 / 高 44px / 毛玻璃背景 / 文字 12px + 透明度 0.8 → 悬停 1.0
-
-### Hero 区
-
-文字居中 / 标题 48–96px 字重 300 / 副标题 21–28px / 产品图居中 / 大量留白
-
-### 卡片
-
-圆角 20px / 悬停：scale 1.02 + 阴影 / 深色浅色背景可交替
-
-## 无障碍
-
-- 正文对比度 ≥ 4.5:1
-- 支持深色模式、减少动画、增强对比度偏好
-- 键盘完整可导航 + 聚焦环可见
-
-## 参考资料
-
-详细实现（CSS 代码、Tailwind 配置、完整组件规范）见 references 目录。
-
-### Liquid Glass 专项
+### 平台路由
 
 | 文件 | 内容 |
 |---|---|
-| [14-liquid-glass-adoption.md](references/14-liquid-glass-adoption.md) | HIG Materials Liquid Glass、Adopting Liquid Glass、Landmarks 示例抽取、跨平台转译、导航/工具栏/图标检查表 |
-| [15-liquid-glass-controls.md](references/15-liquid-glass-controls.md) | Liquid Glass 控件规范：按钮、工具栏、分段控件、开关、滑块、搜索、badge、popover/sheet、状态、颜色、regular/clear 变体与降级 |
-| [16-liquid-glass-api-motion-color.md](references/16-liquid-glass-api-motion-color.md) | Liquid Glass API、动画/过渡、色彩/深色模式、UIKit/AppKit/Web fallback 与分类示例代码 |
-| [17-liquid-glass-deep-link-map.md](references/17-liquid-glass-deep-link-map.md) | Liquid Glass 官方深度链接地图：HIG 关联页、SwiftUI/UIKit/AppKit API、导航/滚动/背景扩展、Apple-only 边界与调用路线 |
+| [18-platform-routing.md](references/18-platform-routing.md) | Android、Windows、Apple 与 Web 的选择决策树、冲突处理、跨平台翻译和验收路线 |
 
-### 通用参考
+### Material & Google Design
 
 | 文件 | 内容 |
 |---|---|
-| [00-philosophy.md](references/00-philosophy.md) | 设计哲学、HIG 六原则、设计签名 |
-| [01-tokens.md](references/01-tokens.md) | 色彩、排版、间距、断点、圆角、阴影、毛玻璃 |
-| [02-components.md](references/02-components.md) | 按钮、导航栏、卡片、表单、模态框、Toast、页脚 |
-| [03-patterns.md](references/03-patterns.md) | Hero 区、双栏、三栏、图文区等页面布局模式 |
-| [04-accessibility.md](references/04-accessibility.md) | 色彩对比度、Focus 管理、动画减弱、ARIA |
-| [05-tailwind-config.md](references/05-tailwind-config.md) | Tailwind CSS 配置、CSS 变量版、使用示例 |
-| [06-fonts.md](references/06-fonts.md) | PingFang SC 跨平台字体打包方案 |
-| [07-motion.md](references/07-motion.md) | 独立 Motion Token、动效原则、模式矩阵、reduced motion |
-| [08-apple-docs-coverage.md](references/08-apple-docs-coverage.md) | Apple 官方文档覆盖地图、任务到文档的路由 |
-| [09-motion-templates.md](references/09-motion-templates.md) | Apple 风格前端动画模板库、Liquid Glass 和平台转场模式 |
-| [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) | 爬取后的 Apple 官方 URL 分类地图、skill 调用路由 |
-| [11-hig-foundations-patterns.md](references/11-hig-foundations-patterns.md) | HIG Foundations / Patterns 抽取：视觉、文案、隐私、加载、搜索 |
-| [12-hig-components-inputs.md](references/12-hig-components-inputs.md) | HIG Components / Inputs 抽取：控件、导航、表单、菜单、键盘/指针/触控 |
-| [13-platform-resources-technologies.md](references/13-platform-resources-technologies.md) | 平台适配、Apple Design Resources、字体/SF Symbols、技术品牌 |
+| [19-google-android-map.md](references/19-google-android-map.md) | Android Mobile Design 与 Material 3 官方深度链接地图、开发入口、任务路由 |
+| [20-material-foundations-styles.md](references/20-material-foundations-styles.md) | Material 3 无障碍、内容、Token、状态、布局、色彩、字体、elevation、shape、spacing、icon |
+| [21-material-components-map.md](references/21-material-components-map.md) | Material 3 全组件 overview/guidelines/specs/accessibility 索引与组件选择规则 |
+| [22-material-motion.md](references/22-material-motion.md) | Material 3 Expressive motion、空间/效果动效、过渡模式、Web fallback 和 reduced motion |
+
+### Microsoft Design
+
+| 文件 | 内容 |
+|---|---|
+| [23-microsoft-windows-map.md](references/23-microsoft-windows-map.md) | Windows Design、WinUI/Windows App SDK、Fluent 2 官方地图和任务路由 |
+| [24-fluent-foundations-components.md](references/24-fluent-foundations-components.md) | Windows/Fluent 原则、Token、颜色、材质、布局、排版、无障碍和 Web 组件索引 |
+| [25-microsoft-motion.md](references/25-microsoft-motion.md) | Windows 原生 Motion 与 Fluent Web Motion，时间/缓动、转场、编舞和无动画策略 |
+
+### Apple Design
+
+| 文件 | 内容 |
+|---|---|
+| [08-apple-docs-coverage.md](references/08-apple-docs-coverage.md) | Apple 官方文档覆盖状态和任务路由 |
+| [10-apple-official-docs-map.md](references/10-apple-official-docs-map.md) | Apple Design/HIG 官方 URL 分类地图 |
+| [11-hig-foundations-patterns.md](references/11-hig-foundations-patterns.md) | HIG Foundations 与 Patterns |
+| [12-hig-components-inputs.md](references/12-hig-components-inputs.md) | HIG Components 与 Inputs |
+| [13-platform-resources-technologies.md](references/13-platform-resources-technologies.md) | Apple 平台差异、资源、字体、SF Symbols 和技术品牌 |
+
+### Apple Liquid Glass 专项
+
+| 文件 | 内容 |
+|---|---|
+| [14-liquid-glass-adoption.md](references/14-liquid-glass-adoption.md) | HIG Materials、Adopting Liquid Glass、Landmarks 示例与跨平台边界 |
+| [15-liquid-glass-controls.md](references/15-liquid-glass-controls.md) | 原生控件、regular/clear、颜色、状态与 fallback |
+| [16-liquid-glass-api-motion-color.md](references/16-liquid-glass-api-motion-color.md) | SwiftUI/UIKit/AppKit API、系统转场、颜色与深色模式 |
+| [17-liquid-glass-deep-link-map.md](references/17-liquid-glass-deep-link-map.md) | Liquid Glass 官方深度链接地图 |
+
+### Apple.com 与通用实现参考
+
+| 文件 | 内容 |
+|---|---|
+| [00-philosophy.md](references/00-philosophy.md) | Apple/HIG 设计哲学和设计签名 |
+| [01-tokens.md](references/01-tokens.md) | Apple.com 色彩、排版、间距、断点、圆角与材质 Token |
+| [02-components.md](references/02-components.md) | Apple 风格 Web 组件模式 |
+| [03-patterns.md](references/03-patterns.md) | Apple 风格页面布局模式 |
+| [04-accessibility.md](references/04-accessibility.md) | Web 对比度、焦点、ARIA 和减少动态 |
+| [05-tailwind-config.md](references/05-tailwind-config.md) | Apple 风格 Tailwind/CSS 实现 |
+| [06-fonts.md](references/06-fonts.md) | PingFang SC 跨平台字体与 fallback |
+| [07-motion.md](references/07-motion.md) | Apple 风格独立 Motion Token |
+| [09-motion-templates.md](references/09-motion-templates.md) | Apple 风格前端动画模板 |

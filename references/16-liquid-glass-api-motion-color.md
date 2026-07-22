@@ -14,7 +14,8 @@ Use this reference when a task needs Liquid Glass implementation detail, animati
 | `Glass.regular` / `Glass.clear` | Variant choice | Readable default vs rich-media overlay |
 | HIG Color: Liquid Glass color | Color and contrast | Accent placement, monochrome labels, light/dark/high-contrast variants |
 | HIG Color: System colors | Semantic color | Prefer dynamic system colors; define custom variants for light/dark/high contrast |
-| UIKit native menu button route | UIKit API / system menu transition | Prefer `UIButtonConfiguration.glassButtonConfiguration` + `UIButton.menu` + `showsMenuAsPrimaryAction` + `UIMenu`/`UIAction` when the interaction is a menu |
+| UIKit native components route | UIKit API / system-owned Liquid Glass | Prefer `UITabBar`, `UITabBarItem`, `UISegmentedControl`, `UIButtonConfiguration`, `UIControl.showsMenuAsPrimaryAction`, `UIMenu`, and `UIAction` before custom glass |
+| UIKit custom glass route | UIKit API / app-owned custom glass | Use `UIGlassEffect` inside `UIVisualEffectView` only for custom components that standard UIKit controls do not cover |
 | SwiftUI `Material` | Standard material fallback | Content-layer blur/vibrancy, not Liquid Glass |
 | UIKit `UIBlurEffect` / `UIVibrancyEffect` | UIKit standard material fallback | Blur behind `UIVisualEffectView`; vibrant foreground labels/icons |
 | AppKit `NSVisualEffectView.BlendingMode` | macOS standard material fallback | Blend behind window or within current window |
@@ -53,7 +54,7 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 - Use direct manipulation for sliders/toggles and pressed controls. The active part can become glass-like while the rest of the form remains standard.
 - Prefer `GlassEffectContainer` for multiple glass shapes so the system can optimize rendering and coordinate shape interaction.
 - Use stable IDs for morphing shapes. A morph without stable identity reads as a random dissolve.
-- For native menus on iOS/iPadOS 26+, do not re-create the bubble-to-menu expansion with custom scale, spring, or blur timing. Use a system `UIButton` with a `UIMenu`; UIKit owns the menu presentation, optical thickening, refraction/lensing, shadow, accessibility, and dismissal behavior.
+- For native UIKit components on iOS/iPadOS 26+, do not re-create standard Liquid Glass behavior with custom scale, spring, blur, tint, or `UIGlassEffect` layers. Use `UITabBar` for tab navigation, `UISegmentedControl` for local mode switching, and `UIButton` + `UIMenu` for menu triggers; UIKit owns their material, interaction feedback, accessibility, and transitions.
 - Use matched geometry when elements are close enough to feel spatially related; use materialize/dissolve for elements that appear from unrelated positions.
 - Do not animate blur continuously. Animate position, scale, opacity, clip, radius, and state changes; let platform material rendering update discretely.
 - Respect reduced motion: replace morphs, parallax, and scroll-linked stretch with fade or instant layout changes.
@@ -84,7 +85,7 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 |---|---|---|
 | Web / enterprise UI | Transfer principles only | Use readable translucent controls, solid fallbacks, and CSS reduced-motion/transparency handling |
 | SwiftUI apps | Direct API use | Prefer system controls, `glassEffect`, `GlassEffectContainer`, button styles, scroll-edge APIs |
-| UIKit apps | Direct API use where available | Prefer standard bars/buttons/menus; use `UIGlassEffect`, glass button configurations, and `UIMenu` before custom rendering |
+| UIKit apps | Direct API use where available | Prefer standard bars/tab bars/segmented controls/buttons/menus. Use `UIGlassEffect` only for custom components that cannot be expressed as standard UIKit controls |
 | AppKit apps | Direct API use where available | Prefer `NSGlassEffectView` for glass and `NSVisualEffectView` for standard materials |
 | tvOS | Focus-specific | Liquid Glass appears on focus/navigation; avoid copying TV focus UI to regular Web |
 | widgets/icons | Apple-specific | Use as platform guidance only; do not generalize widget/icon rendering to app content |
@@ -96,7 +97,9 @@ Crawl note: HIG pages such as Game controls and Touchscreen gestures can surface
 |---|---|---|---|---|
 | Standard glass button | `.buttonStyle(.glass)` / `GlassButtonStyle` | `UIButton.Configuration.glass()` | `NSButton.BezelStyle.glass` | Rounded translucent button with solid fallback |
 | Prominent primary glass | `.buttonStyle(.glassProminent)` / `GlassProminentButtonStyle` | `.prominentGlass()` / `.prominentClearGlass()` | Use platform prominent/control style | One tinted primary surface per local group |
-| Menu from a glass trigger | Prefer `Menu`/system control before custom glass | `UIButtonConfiguration.glassButtonConfiguration`, `UIButton.menu`, `showsMenuAsPrimaryAction`, `UIMenu`, `UIAction` | Native menu where available | Native menu bridge first; fallback to anchored command menu with semantic parity |
+| Native tab navigation | `TabView` / standard tab APIs | `UITabBar` + `UITabBarItem` | Native tab/sidebar controls where available | Platform navigation component first; fallback to semantic tab bar |
+| Native local mode switch | `Picker` with segmented style / standard segment APIs | `UISegmentedControl` | Native segmented control where available | Let the platform own the selected platter and switch animation; fallback to semantic segment group |
+| Menu from a glass trigger | Prefer `Menu`/system control before custom glass | `UIButtonConfiguration.glassButtonConfiguration`, `UIButton.menu`, `UIControl.showsMenuAsPrimaryAction`, `UIMenu`, `UIAction` | Native menu where available | Native menu bridge first; fallback to anchored command menu with semantic parity |
 | Custom glass shape | `.glassEffect(_:in:)`; default shape is `DefaultGlassEffectShape` | `UIGlassEffect` | `NSGlassEffectView` | CSS backdrop-filter surface with contrast-safe fill; pill/capsule default |
 | Multiple glass shapes | `GlassEffectContainer(spacing:)` | Prefer standard controls; custom grouping if needed | Prefer standard controls; custom grouping if needed | One grouped layer; animate transforms and radius |
 | Resting union | `glassEffectUnion(id:namespace:)` | N/A | N/A | Shared wrapper/background spanning related items |
@@ -333,6 +336,21 @@ Use semantic foreground styles and system accent colors before inventing fixed g
 
 ## 5. UIKit and AppKit examples
 
+### Native-first UIKit route matrix
+
+Use this matrix before reaching for `UIGlassEffect` or Web-style glass tokens.
+
+| Component | iOS/iPadOS 26 route | Who owns material and motion | App-owned responsibilities |
+|---|---|---|---|
+| Primary task/file/skill tab bar | `UITabBar` with `UITabBarItem` objects | UIKit owns Liquid Glass background, selected platter, press feedback, and selection transition | Items, titles, SF Symbols, `itemPositioning`, selected item, selected/unselected tint |
+| Installed/store segmented switch | `UISegmentedControl` | UIKit owns Liquid Glass track, floating selected platter, press feedback, and selection animation | Items, selected index/identifier, overall size, segment width policy, optional `selectedSegmentTintColor`, title attributes, content offsets |
+| Add button menu | `UIButtonConfiguration.glassButtonConfiguration` + `UIButton.menu` + `UIControl.showsMenuAsPrimaryAction` | UIKit owns glass button feedback, menu material, bubble-to-menu morph, dismissal | Symbol, corner style, menu hierarchy, action callbacks |
+| Title/picker menu | `UIButtonConfiguration.plainButtonConfiguration` + custom title layout + `UIMenu` | App owns the collapsed text/chevron layout; UIKit owns expanded menu material and transition | Centered title measurement, chevron placement, menu hierarchy, selection state |
+| Search/refresh/input custom glass | `UIGlassEffect` inside `UIVisualEffectView` | UIKit renders the glass effect; app owns sizing, tint, clear/regular choice, borders/highlights | Radius, content padding, tint alpha, fallback, reduced transparency checks |
+| Android/iOS 25 and below/Web | `BlurView`, `UIBlurEffect`, CSS, or solid fallback | App/design system owns behavior | Semantic parity, contrast, reduced motion/transparency, no claim of exact Liquid Glass |
+
+Rule: `UITabBar`, `UISegmentedControl`, and `UIMenu` are system components with system-owned Liquid Glass behavior. `UIGlassEffect` is for custom glass containers and should not be described as the implementation behind a standard `UITabBar` or segmented control.
+
 ### UIKit glass button
 
 ```swift
@@ -352,9 +370,9 @@ Use this route when a glass button opens a menu, command list, picker, or nested
 Control choice:
 
 - Use `glassButtonConfiguration` for icon-only or compact floating menu triggers.
-- Use `plainButtonConfiguration` with the system popup indicator for title/picker triggers that should stay visually quiet until the menu opens.
+- Use `plainButtonConfiguration` with app-owned centered title and chevron layout for title/picker triggers that should stay visually quiet until the menu opens.
 - Use SF Symbols at the surrounding control weight; `regular` is usually the right default for compact menu triggers.
-- Assign `menu` and `showsMenuAsPrimaryAction` in both cases so the trigger, menu, accessibility behavior, and dismissal remain system-owned.
+- Assign `menu` and `UIControl.showsMenuAsPrimaryAction` in both cases so the trigger, menu, accessibility behavior, and dismissal remain system-owned.
 
 ```objc
 UIButtonConfiguration *configuration = nil;
@@ -390,6 +408,81 @@ Menu semantics to preserve when bridging from React Native, Flutter, or another 
 - On iOS 26+ prefer this native route for menu triggers; on iOS 25 and below, Android, and Web, use a semantic anchored menu fallback with reduced-motion and reduced-transparency handling. Do not claim the fallback is a full Liquid Glass material.
 
 Use SwiftUI `GlassEffectContainer`, `glassEffectID`, and custom matched geometry only for custom glass view groups that cannot be represented by a system menu or standard control.
+
+### Native UIKit tab bar
+
+Use this route for top-level task/file/skill navigation. A real `UITabBar` is not three custom glass buttons stitched together and is not a `UIGlassEffect` recreation.
+
+```objc
+@interface NativeTabBar : UITabBar <UITabBarDelegate>
+@end
+
+UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Tasks"
+                                                   image:[UIImage systemImageNamed:@"checklist"]
+                                           selectedImage:[UIImage systemImageNamed:@"checklist.checked"]];
+
+tabBar.itemPositioning = UITabBarItemPositioningFill;
+tabBar.translucent = YES;
+tabBar.tintColor = accentColor;
+tabBar.unselectedItemTintColor = UIColor.secondaryLabelColor;
+[tabBar setItems:@[item] animated:NO];
+tabBar.selectedItem = item;
+```
+
+UIKit owns the tab bar's Liquid Glass material, selected background/platter, press feedback, and selected-item transition. The app should provide semantic items, selected state, colors, accessibility identifiers/labels, and callbacks. Avoid custom `UIGlassEffect`, custom borders, custom selection backgrounds, or hand-authored tab switching animation unless building a non-UIKit fallback.
+
+### Native UIKit segmented control
+
+Use this route for local mode switches, filters, and short mutually exclusive choices. A real `UISegmentedControl` is not a custom glass track with an animated `UIGlassEffect` thumb. On iOS/iPadOS 26+, UIKit owns the Liquid Glass track, floating selected platter, press feedback, selection animation, accessibility behavior, and adaptation to system settings.
+
+```objc
+@interface NativeSegmentedControl : UISegmentedControl
+@end
+
+UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:@[@"Installed", @"Skill Store"]];
+control.momentary = NO;
+control.apportionsSegmentWidthsByContent = NO;
+control.selectedSegmentIndex = 0;
+[control addTarget:self
+            action:@selector(handleSegmentChanged:)
+  forControlEvents:UIControlEventValueChanged];
+```
+
+App-owned surface:
+
+- overall width and height
+- segment count, titles/images, and equal/content-based width policy
+- `selectedSegmentIndex` synchronization and `UIControlEventValueChanged` callbacks
+- optional `selectedSegmentTintColor`, title text attributes, and content position adjustments
+
+System-owned internals:
+
+- selected floating platter width/height independent of the segment geometry
+- glass blur, refraction, shadow elevation, edge relief, and press/switch animation parameters
+- automatic adaptation to Reduce Motion, Reduce Transparency, contrast, and platform appearance
+
+Fallback rule: on Android, Web, iOS 25 and below, or explicit fallback mode, a custom segment may use `BlurView`/CSS/`UIBlurEffect` plus `Animated.spring` or transform-based selection motion. Do not claim that fallback has exact native Liquid Glass parity.
+
+### Custom UIKit glass container
+
+Use this route for search, refresh, input, status, or composite controls that cannot be represented by `UITabBar`, `UISegmentedControl`, `UIButton`, `UIMenu`, `UISearchController`, or another standard UIKit component.
+
+```objc
+#if __has_include(<UIKit/UIGlassEffect.h>)
+if (@available(iOS 26.0, *)) {
+  UIGlassEffect *effect = [UIGlassEffect effectWithStyle:UIGlassEffectStyleRegular];
+  effect.interactive = YES;
+  effect.tintColor = glassTintColor;
+
+  UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+  effectView.layer.cornerRadius = radius;
+  effectView.clipsToBounds = YES;
+  [effectView.contentView addSubview:contentView];
+}
+#endif
+```
+
+The app owns the component frame, corner radius, clear/regular style choice, tint, content padding, border/highlight treatment, and fallback. Keep `UIVisualEffectView` alpha at 1; put translucency into the effect/tint/content layers instead. On older iOS, use `UIBlurEffectStyleSystemMaterial` or an opaque semantic surface.
 
 ### UIKit standard material fallback
 
@@ -557,6 +650,8 @@ For complex Web morphs, use shared-layout animation only if the source and desti
 - [ ] Does Reduce Motion remove morph, parallax, scroll-linked stretch, and blur movement?
 - [ ] Are multiple glass shapes grouped in one container or wrapper for performance and visual continuity?
 - [ ] Does scroll-edge treatment exist only where scrolling content passes behind controls?
+- [ ] Did standard UIKit components (`UITabBar`, `UISegmentedControl`, `UIButton` + `UIMenu`) stay system-owned instead of being rebuilt with `UIGlassEffect`?
+- [ ] Is `UIGlassEffect` limited to custom components that cannot be standard UIKit controls?
 - [ ] Are Apple-only surfaces such as widgets, icons, visionOS glass, and spatial-photo glass labeled as platform-specific?
 
 ## Source links
@@ -583,12 +678,20 @@ For complex Web morphs, use shared-layout animation only if the source and desti
 - https://developer.apple.com/documentation/swiftui/glassbuttonstyle
 - https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
 - https://developer.apple.com/documentation/swiftui/defaultglasseffectshape
+- https://developer.apple.com/documentation/UIKit/UITabBar
+- https://developer.apple.com/documentation/UIKit/UITabBarItem
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl/selectedSegmentTintColor
 - https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIVisualEffectView
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration
 - https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/plainButtonConfiguration
 - https://developer.apple.com/documentation/UIKit/UIButton/menu
-- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIControl/showsMenuAsPrimaryAction
 - https://developer.apple.com/documentation/UIKit/UIMenu
 - https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIContextMenuInteraction
 - https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline
 - https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/singleSelection
 - https://developer.apple.com/documentation/UIKit/UIMenuElementAttributes/destructive

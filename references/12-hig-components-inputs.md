@@ -40,8 +40,13 @@ Motion: Press feedback, Haptic sync.
 ### Segmented controls
 
 - Use for local mode switches in the same view.
-- Keep segment labels short and parallel.
+- Keep segment labels short, parallel, and similar in length; equal-width segments usually feel more balanced.
+- Keep control types consistent: do not mix action segments with persistent selection segments in one control.
+- Prefer either text or images in a single segmented control, not a mixture of both.
+- Use nouns or noun phrases for segment labels; a text-labeled segmented control usually does not need introductory text.
+- For iOS/iPadOS 26+ Liquid Glass, prefer native `UISegmentedControl`; UIKit owns the selected platter and switching animation. Use custom glide only for Web/Android/older-iOS/fallback implementations.
 - Do not change global navigation or deep route unexpectedly.
+- Avoid placing other focusable controls too close to segmented controls, especially in keyboard/focus-driven contexts.
 - The selected indicator may glide; text should stay stable.
 
 Motion: Segmented pill glide, Tab content crossfade.

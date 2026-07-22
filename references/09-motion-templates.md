@@ -452,7 +452,7 @@ Rules:
 
 ## 8. Liquid Glass and material templates
 
-Native menu exception: when an iOS/iPadOS 26+ button opens a menu or command list, prefer UIKit's native `UIButton` + `UIMenu` route and let the system perform the Liquid Glass bubble-to-menu transition. Use the templates below for custom glass groups, Web/Android/older-iOS fallbacks, or interactions that cannot be represented by standard controls.
+Native UIKit exception: when iOS/iPadOS 26+ provides a standard component, do not apply these templates to recreate its motion. Use `UITabBar`/`UITabBarItem` for tab navigation, `UISegmentedControl` for local mode switching, and `UIButton` + `UIMenu` + `UIControl.showsMenuAsPrimaryAction` for menu triggers; let UIKit perform the Liquid Glass material, selection, press, segment switching, menu morph, and dismissal transitions. Use the templates below for custom glass groups, Web/Android/older-iOS fallbacks, or interactions that cannot be represented by standard controls.
 
 ### 8.1 Glass materialize
 

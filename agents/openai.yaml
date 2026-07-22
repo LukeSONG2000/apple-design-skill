@@ -1,5 +1,5 @@
 interface:
-  display_name: "Apple Design Skill"
-  short_description: "Use with frontend-design as an Apple Design reference: HIG maps, tokens, motion, and platform boundaries"
-  brand_color: "#0071E3"
-  default_prompt: "Use $apple-design-skill alongside $frontend-design as an Apple Design reference for a polished frontend interface."
+  display_name: "More Than Design"
+  short_description: "Platform-aware design across Apple, Google, and Microsoft"
+  brand_color: "#2563EB"
+  default_prompt: "Use $more-than-design-skill alongside $frontend-design to route the interface through the appropriate Apple, Google, Microsoft, or web guidance while keeping native behavior, visual style, and motion distinct."

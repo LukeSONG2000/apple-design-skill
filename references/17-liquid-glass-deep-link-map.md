@@ -37,6 +37,8 @@ Classification rule:
 | Decide whether glass belongs in the UI | HIG Materials, Adopting Liquid Glass | `14`, `15`, `16` |
 | Pick regular vs clear glass | HIG Materials, `Glass.regular`, `Glass.clear` | `14`, `15`, `16` |
 | Add custom glass to a SwiftUI control | Applying Liquid Glass to custom views, `glassEffect`, `GlassEffectContainer` | `15`, `16` |
+| Use native Liquid Glass tab navigation | Adopting Liquid Glass navigation, `UITabBar`, `UITabBarItem` | `15`, `16`, this file |
+| Use native Liquid Glass segmented selection | Adopting Liquid Glass controls, HIG Segmented controls, `UISegmentedControl` | `15`, `16`, this file |
 | Use native Liquid Glass menu transitions | `UIButtonConfiguration.glassButtonConfiguration`, `UIButton.menu`, `UIMenu`, WWDC25 Meet Liquid Glass, WWDC25 What's new in UIKit | `15`, `16`, this file |
 | Match Apple's SwiftUI `View styles` Liquid Glass list | SwiftUI View styles, Styling views with Liquid Glass group | `16`, this file |
 | Design toolbar/tab/sidebar glass | HIG Toolbars, Tab bars, Sidebars, Adopting Liquid Glass navigation/toolbars | `15`, `16`, this file |
@@ -153,14 +155,21 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 
 | API/page | Use | Cross-platform translation |
 |---|---|---|
-| https://developer.apple.com/documentation/UIKit/UIGlassEffect | UIKit Liquid Glass effect | Native-client glass only; Web uses tokenized fallback |
+| https://developer.apple.com/documentation/UIKit/UIGlassEffect | UIKit custom Liquid Glass effect | Custom native-client glass only; do not use to explain standard `UITabBar`, `UISegmentedControl`, or `UIMenu` behavior |
+| https://developer.apple.com/documentation/UIKit/UIVisualEffectView | Container for visual effects | Required host for UIKit visual effects; add subviews to `contentView` |
+| https://developer.apple.com/documentation/UIKit/UITabBar | Native tab navigation control | Use for top-level tab navigation; UIKit owns Liquid Glass material/selection behavior |
+| https://developer.apple.com/documentation/UIKit/UITabBarItem | Native tab bar item | Provide title, normal image, selected image, badge/accessibility semantics |
+| https://developer.apple.com/documentation/UIKit/UISegmentedControl | Native segmented control | Use for local mode switches; UIKit owns Liquid Glass track, selected platter, press feedback, and switching animation |
+| https://developer.apple.com/documentation/UIKit/UISegmentedControl/selectedSegmentTintColor | Selected segment tint | Optional public tint API; does not expose internal selected platter geometry or animation |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/glass() | Standard glass button | Base glass button style |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/prominentGlass() | Prominent glass button | Primary action material tint |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/clearGlass() | Clear glass button | Media/rich-background controls |
 | https://developer.apple.com/documentation/UIKit/UIButton/Configuration-swift.struct/prominentClearGlass() | Prominent clear button | Rare emphasized media control |
+| https://developer.apple.com/documentation/UIKit/UIButtonConfiguration | Objective-C button configuration namespace | Use when bridging UIKit from Objective-C/React Native plugins |
 | https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration | Objective-C/UIKit glass button configuration | Native RN/plugin bridges that instantiate `UIButtonConfiguration` directly |
+| https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/plainButtonConfiguration | Transparent button configuration | Title/picker menu triggers with app-owned collapsed text/chevron layout |
 | https://developer.apple.com/documentation/UIKit/UIButton/menu | Button-owned menu | Attach command hierarchy to the trigger so UIKit presents it from the button |
-| https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction | Primary-action menu trigger | Tap opens the menu instead of requiring a secondary/context gesture |
+| https://developer.apple.com/documentation/UIKit/UIControl/showsMenuAsPrimaryAction | Primary-action menu trigger | Tap/touch shows the control's context menu as the primary action |
 | https://developer.apple.com/documentation/UIKit/UIMenu | Menu/submenu container | Preserve nested command hierarchy, inline groups, images, and selected states |
 | https://developer.apple.com/documentation/UIKit/UIAction | Leaf command element | Preserve action title, image, state, attributes, and selection callback |
 | https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline | Inline menu section | Flatten grouped commands with separators instead of deeper submenus |
@@ -185,12 +194,12 @@ Low-signal examples: HIG input pages can mention glass through page-level relate
 
 ### UIKit Native Menu Route
 
-Use this route when a button opens a menu, picker, command list, or nested action set on iOS/iPadOS 26+. Officially, Liquid Glass menu motion is a system behavior: the menu opens from the triggering bubble, and larger menu glass gets the system's thicker material treatment. In implementation terms, bridge the trigger as a native `UIButton`, assign a `UIMenu`, and set `showsMenuAsPrimaryAction` when tap should open the menu.
+Use this route when a button opens a menu, picker, command list, or nested action set on iOS/iPadOS 26+. Officially, Liquid Glass menu motion is a system behavior: the menu opens from the triggering bubble, and larger menu glass gets the system's thicker material treatment. In implementation terms, bridge the trigger as a native `UIButton`, assign a `UIMenu`, and set `UIControl.showsMenuAsPrimaryAction` when tap should open the menu.
 
 Trigger choice:
 
 - Icon-only triggers can use a glass button configuration.
-- Title/picker triggers can stay visually quiet with a plain button configuration plus the system popup indicator.
+- Title/picker triggers can stay visually quiet with a plain button configuration plus an app-owned centered title/chevron layout; UIKit still owns the expanded menu.
 - Both routes should assign the menu to the button instead of showing a custom overlay from JavaScript.
 
 Transfer boundary:
@@ -198,6 +207,28 @@ Transfer boundary:
 - iOS/iPadOS 26+ native apps or React Native/Flutter plugins can use this route directly.
 - Web, Android, and older iOS should preserve menu semantics with an anchored fallback, not attempt a pixel-perfect Liquid Glass clone.
 - SwiftUI custom glass APIs such as `GlassEffectContainer`, `glassEffectID`, and `glassEffectTransition` are for custom view groups; they are not the first choice when a standard system menu already models the interaction.
+
+### UIKit Native Tab Bar Route
+
+Use this route when the component is top-level app navigation. A real `UITabBar` with `UITabBarItem` objects lets UIKit own the Liquid Glass background, selected platter, press feedback, selected-item transition, VoiceOver semantics, and platform adaptation. The app supplies titles, SF Symbols, selected images, selected/unselected tint, item positioning, selected item, and callbacks.
+
+Do not describe a native `UITabBar` implementation as a `UIGlassEffect` recreation. `UIGlassEffect` belongs to custom glass containers such as search/refresh/input surfaces that standard UIKit components do not cover.
+
+### UIKit Native Segmented Control Route
+
+Use this route for local mode switching or short mutually exclusive filters, not for global navigation. HIG says segmented controls are linear sets of segments that act like buttons, usually equal width, and should keep control type and content style consistent. In the Liquid Glass adoption guide, segmented controls are part of the standard controls whose updated appearance and dimensions should be reviewed without hard-coding layout metrics.
+
+Implementation guidance:
+
+- Bridge as `UISegmentedControl` on iOS/iPadOS 26+ when Liquid Glass is enabled.
+- Use `momentary = NO` for persistent selections; use momentary only for action groups without a retained selection.
+- Use `apportionsSegmentWidthsByContent = NO` for balanced equal-width choices with similar labels.
+- Synchronize selection through `selectedSegmentIndex`; emit `UIControlEventValueChanged` back to the client layer.
+- Avoid setting custom background, shadows, internal glass layers, or manual spring animation in the native route.
+
+Adjustable public surface: overall frame, segment widths/content policy, selected index, `selectedSegmentTintColor`, title attributes, and content position offsets.
+
+Not independently adjustable in the native route: selected platter width/height, glass blur/refraction intensity, shadow height, edge relief, and selection animation parameters. Use a custom fallback only when those internals must be controlled, and label it as fallback rather than native Liquid Glass.
 
 ## AppKit API Map
 
@@ -378,11 +409,19 @@ Use mirrored or sampled media only as a background impression. Do not move reada
 - https://developer.apple.com/documentation/swiftui/glassprominentbuttonstyle
 - https://developer.apple.com/documentation/swiftui/defaultglasseffectshape
 - https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIVisualEffectView
+- https://developer.apple.com/documentation/UIKit/UITabBar
+- https://developer.apple.com/documentation/UIKit/UITabBarItem
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl/selectedSegmentTintColor
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration
 - https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/plainButtonConfiguration
 - https://developer.apple.com/documentation/UIKit/UIButton/menu
-- https://developer.apple.com/documentation/UIKit/UIButton/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIControl/showsMenuAsPrimaryAction
 - https://developer.apple.com/documentation/UIKit/UIMenu
 - https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIContextMenuInteraction
 - https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/displayInline
 - https://developer.apple.com/documentation/UIKit/UIMenu/Options-swift.struct/singleSelection
 - https://developer.apple.com/documentation/UIKit/UIMenuElementState/on

@@ -9,8 +9,10 @@ Use this reference when a task mentions Liquid Glass, glass materials, transluce
 | HIG Materials: Liquid Glass | Core material definition, functional-layer rule, regular/clear variants, standard-material boundary | Start here for material choice and hierarchy |
 | HIG Color: Liquid Glass color | Accent/tint rules, monochrome controls over colorful content, primary action emphasis | Use before adding color to glass controls |
 | HIG Layout / Motion / Scroll views / Toolbars / Sidebars / Tab bars / Buttons / App icons / Widgets | Additional Liquid Glass design implications across layout, motion, scroll-edge readability, bars, icon layers, and widget appearances | Use `16-liquid-glass-api-motion-color.md` for categorized extraction/code and `17-liquid-glass-deep-link-map.md` for URL routing |
+| HIG Segmented controls | Segment purpose, equal-width balance, label consistency, momentary/action vs selection behavior | Use before designing local mode switches or segmented filters |
 | SwiftUI custom Liquid Glass docs | API behavior: glassEffect, regular/clear, interactive, container, union, IDs, transitions, performance | Use for Apple API translation and Web/client analogs |
-| UIKit/AppKit material docs | `UIGlassEffect`, `UIBlurEffect`, `UIVibrancyEffect`, `NSGlassEffectView`, `NSVisualEffectView.BlendingMode` | Use when translating to native clients or standard-material fallbacks |
+| UIKit standard component docs | `UITabBar`, `UITabBarItem`, `UISegmentedControl`, `UIButtonConfiguration`, `UIControl.showsMenuAsPrimaryAction`, `UIMenu`, `UIAction` | Use before custom glass; system components own native Liquid Glass appearance and motion |
+| UIKit/AppKit material docs | `UIGlassEffect`, `UIVisualEffectView`, `UIBlurEffect`, `UIVibrancyEffect`, `NSGlassEffectView`, `NSVisualEffectView.BlendingMode` | Use for custom native clients or standard-material fallbacks after standard components are ruled out |
 | Adopting Liquid Glass | Migration checklist across visual refresh, icons, controls, navigation, toolbars, modals, layout, search, and platforms | Start here for audit or redesign tasks |
 | Landmarks: Building an app with Liquid Glass | Concrete SwiftUI case study for iOS, iPadOS, and macOS | Use for implementation pattern extraction |
 | Landmarks background extension topic | Media bleeding under sidebar/inspector without moving foreground content | Use for hero media, split view, inspector layouts |
@@ -94,9 +96,24 @@ Use standard materials and effects for content structure beneath Liquid Glass:
 - Limit custom glass to the most important functional elements; too many glass controls create visual noise.
 - Treat the material as adaptive: overlap, focus state, accessibility settings, and platform can change appearance.
 
+### Native component priority
+
+When implementing Liquid Glass on UIKit, choose the highest-level standard component that matches the interaction before adding `UIGlassEffect`:
+
+| Interaction | Use first | Use `UIGlassEffect` only when |
+|---|---|---|
+| Top-level tabs | `UITabBar` + `UITabBarItem` | Building a non-tab custom control or a fallback surface |
+| Local two-to-five option mode switch | `UISegmentedControl` | Building a nonstandard segment surface, manual fallback, Web/Android, or iOS 25 and below |
+| Button opens a command menu | `UIButtonConfiguration.glassButtonConfiguration` + `UIButton.menu` + `UIControl.showsMenuAsPrimaryAction` | The trigger is not a standard button/menu interaction |
+| Title/picker opens a menu | `UIButtonConfiguration.plainButtonConfiguration` + app-owned collapsed title layout + `UIMenu` | The collapsed title is part of a custom composite control |
+| Search/refresh/input glass | Native control if available; otherwise `UIGlassEffect` inside `UIVisualEffectView` | The control cannot be expressed with standard UIKit APIs |
+
+Do not describe `UITabBar`, `UISegmentedControl`, or `UIMenu` implementations as `UIGlassEffect` recreations. In those cases UIKit owns the material, feedback, transitions, and accessibility. `UIGlassEffect` is for custom glass containers whose size, tint, and chrome are app-owned.
+
 ### Controls
 
 - Avoid hard-coded control dimensions; updated controls may become rounder, larger, or more spacious.
+- For segmented controls, prefer the native standard control on iOS/iPadOS 26+. Apple explicitly calls out segmented controls in the refreshed controls set; avoid hard-coding the internal selected platter, blur, refraction, shadow, or animation.
 - Keep color use restrained in controls and navigation; prefer semantic/system colors with light, dark, and increased-contrast variants.
 - Avoid crowding and overlapping glass controls. Give every glass surface a clear hit target and readable background relationship.
 - For content scrolling under controls, provide a scroll-edge readability layer: native scroll-edge effect on Apple platforms, gradient/mask/opaque fallback elsewhere.
@@ -234,6 +251,19 @@ Before adding Liquid Glass to a frontend, answer these in order:
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectUnion(id:namespace:)
 - https://developer.apple.com/documentation/SwiftUI/View/glassEffectID(_:in:)
 - https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass
+- https://developer.apple.com/documentation/UIKit/UITabBar
+- https://developer.apple.com/documentation/UIKit/UITabBarItem
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl
+- https://developer.apple.com/documentation/UIKit/UISegmentedControl/selectedSegmentTintColor
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/glassButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButtonConfiguration/plainButtonConfiguration
+- https://developer.apple.com/documentation/UIKit/UIButton/menu
+- https://developer.apple.com/documentation/UIKit/UIControl/showsMenuAsPrimaryAction
+- https://developer.apple.com/documentation/UIKit/UIMenu
+- https://developer.apple.com/documentation/UIKit/UIAction
+- https://developer.apple.com/documentation/UIKit/UIContextMenuInteraction
+- https://developer.apple.com/documentation/UIKit/UIGlassEffect
+- https://developer.apple.com/documentation/UIKit/UIVisualEffectView
 - https://developer.apple.com/documentation/SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass
 - https://developer.apple.com/documentation/SwiftUI/Landmarks-Applying-a-background-extension-effect
 - https://developer.apple.com/documentation/SwiftUI/Landmarks-Extending-horizontal-scrolling-under-a-sidebar-or-inspector
