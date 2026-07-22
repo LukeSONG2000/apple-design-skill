@@ -2,6 +2,8 @@
 
 > 目标：Apple 设备优先使用系统字体，非 Apple 设备使用内置 PingFang SC fallback，让 Web、桌面客户端和移动端界面保持一致的中文观感。
 
+> 分发边界：GitHub 完整仓库包含 `ttf` 与 `woff2` 文件；skill-home 轻量包不携带字体二进制。通过 skill-home 安装后如需打包字体，请从完整仓库或上游来源获取，并先完成团队授权审查。
+
 ## 1. 字体来源
 
 字体文件来自 [refinec/PingFangSC](https://github.com/refinec/PingFangSC)，上游仓库声明为 MIT License。当前仓库保留 4 个常用字重：
@@ -81,4 +83,3 @@ flutter:
 - 字体文件较大，Web 默认只引用 `woff2`，不要把 `ttf` 暴露到 Web 首屏加载链路。
 - 仅保留 300/400/500/600 四个常用字重，避免 Thin/Ultralight 增加仓库体积。
 - 发布前按团队合规要求确认字体分发授权；上游 license 副本在 `assets/fonts/PingFangSC/LICENSE.refinec-PingFangSC`。
-

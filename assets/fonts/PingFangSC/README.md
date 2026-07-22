@@ -2,7 +2,7 @@
 
 字体来源：[refinec/PingFangSC](https://github.com/refinec/PingFangSC)。
 
-本目录保留 Apple Design Skill 使用频率最高的 4 个字重：
+本目录保留 More Than Design 使用频率最高的 4 个字重：
 
 | 字重 | 文件 | 用途 |
 |---|---|---|
@@ -24,4 +24,3 @@ Web 项目可直接引用 `pingfang-sc.css`。该 CSS 使用独立字体族名 `
 ## License
 
 上游仓库声明为 MIT License，许可证副本保存在 `LICENSE.refinec-PingFangSC`。产品发布前仍应按团队合规要求确认字体分发授权。
-
